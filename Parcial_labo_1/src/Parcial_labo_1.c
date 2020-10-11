@@ -20,29 +20,23 @@ int main(void)
 	Aviso listAviso[QTY_AVI];
 	int optionMain;
 	int optionReport;
-	int flagPause = 0;
 
 	cli_init(listCliente, QTY_CLI);
 	avi_init(listAviso, QTY_AVI);
 
-	cli_altaForzada(listCliente, QTY_CLI,"Juan","Alvaro","20-16597452-9");
-	cli_altaForzada(listCliente, QTY_CLI,"Jose","Perez","20-12643526-9");
-	cli_altaForzada(listCliente, QTY_CLI,"Noco","Lomo","20-79164125-9");
-	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Merino","20-12387456-9");
-	cli_altaForzada(listCliente, QTY_CLI,"Claudio","Manzano","20-12347865-9");
+	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-39107331-9");
+	cli_altaForzada(listCliente, QTY_CLI,"Jorge","Suarez","20-31388898-4");
+	cli_altaForzada(listCliente, QTY_CLI,"Nico","Ramos","23-38165869-3");
+	cli_altaForzada(listCliente, QTY_CLI,"Laura","Ochoa","27-35098981-7");
+	cli_altaForzada(listCliente, QTY_CLI,"Florencia","Ayala","27-40189698-8");
 
-	avi_altaForzada(listAviso, QTY_AVI,2,4,"VendoClio2010");
-	avi_altaForzada(listAviso, QTY_AVI,1,4,"VendoAutos");
-	avi_altaForzada(listAviso, QTY_AVI,2,4,"VendoMotos");
-	avi_altaForzada(listAviso, QTY_AVI,3,4,"VendoCarros");
+	avi_altaForzada(listAviso, QTY_AVI,2,7,"VendoMuebles");
+	avi_altaForzada(listAviso, QTY_AVI,1,1,"VendoAutos");
+	avi_altaForzada(listAviso, QTY_AVI,2,5,"VendoMotos");
+	avi_altaForzada(listAviso, QTY_AVI,3,4,"VendoAviones");
 
 	do
 	{
-		if(flagPause)
-		{
-			system("pause");
-			system("cls");
-		}
 		utn_showMainMenu(&optionMain);
 		switch (optionMain)
 		{
@@ -59,9 +53,9 @@ int main(void)
 				}
 				break;
 			case 3:
-				if(cli_remove(listCliente, QTY_CLI) == 0)
+				if(avi_remove(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
 				{
-					printf("El cliente se borro correctamente.\n");
+					printf("El cliente y sus avisos se borraron correctamente.\n");
 				}
 				break;
 			case 4:
@@ -83,6 +77,7 @@ int main(void)
 				}
 				break;
 			case 7:
+				avi_printClientes(listAviso, QTY_AVI, listCliente, QTY_CLI)
 				break;
 			case 8:
 				if(utn_showReportMenu(&optionReport) == 0)
@@ -104,6 +99,6 @@ int main(void)
 				}
 				break;
 		}
-		flagPause = 1;
+
 	}while(optionMain != OPTIONS_MAIN);
 }

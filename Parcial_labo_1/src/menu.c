@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include "menu.h"
 #include "validaciones.h"
-
 /**
  * \brief	Muestra el menu principal.
  * \param	int* pOption, puntero a un espacio de memoria.

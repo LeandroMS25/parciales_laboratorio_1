@@ -79,7 +79,7 @@ int cli_modify(Cliente* list, int len)
 	if(list != NULL && len > 0)
 	{
 		cli_print(list, len);
-		if( utn_getNumberInt(&idModify, "Ingrese el id del cliente que desea modificar: ", "\nError", 1, INT_MAX, 2) == 0 &&
+		if( utn_getNumberInt(&idModify, "Ingrese el ID del cliente que desea modificar: ", "ID invalido.\n", 1, INT_MAX, 2) == 0 &&
 			cli_findById(list, len, idModify, &indexModify) == 0 &&
 			utn_getName(buffer.name, "Ingrese el nombre del cliente: ", "Nombre invalido.\n", 2, LONG_NAME - 1) == 0 &&
 			utn_getName(buffer.lastName, "Ingrese el apellido del cliente: ", "Apellido invalido.\n", 2, LONG_NAME - 1) == 0 &&
@@ -129,27 +129,20 @@ int cli_findById(Cliente* list, int len, int id, int* pIndex)
  * \brief Elimina el elemento que de encuentra en el indice recibido.
  * \param Cliente* list, Es el puntero al array.
  * \param int len, es el limite de array.
- * \param int index, es el indice donde se cargara el elemento.
+ * \param int id, es el id del elemento que se borrara.
  * \return (-1) Error / (0) Ok
  */
-int cli_remove(Cliente* list, int len)
+int cli_remove(Cliente* list, int len, int id)
 {
 	int retorno = -1;
-	int idRemove;
 	int indexRemove;
 
-	if(list != NULL && len > 0)
+	if(list != NULL && len > 0 && id >= 0)
 	{
-		cli_print(list, len);
-		if( utn_getNumberInt(&idRemove, "Ingrese el id del elemento que quiere dar de baja: ", "\nError", 1, INT_MAX, 2) == 0 &&
-			cli_findById(list, len, idRemove, &indexRemove) == 0)
+		if(cli_findById(list, len, id, &indexRemove) == 0)
 		{
 			list[indexRemove].isEmpty = 1;
 			retorno = 0;
-		}
-		else
-		{
-			printf("El id seleccionado no existe.");
 		}
 	}
 	return retorno;
@@ -247,7 +240,7 @@ int cli_findFree(Cliente* list, int len, int* pIndex)
  * \param int* pIndex, puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
-int cli_findOccupied(Cliente* list, int len)
+int cli_findOccupied(Cliente* list, int len, int* pIndex)
 {
 	int retorno = -1;
 	int i;
@@ -258,6 +251,7 @@ int cli_findOccupied(Cliente* list, int len)
 		{
 			if(list[i].isEmpty == 0)
 			{
+				*pIndex = i;
 				retorno = 0;
 				break;
 			}
@@ -278,9 +272,9 @@ int cli_show(Cliente* list,int index)
 
     if(list != NULL && index >= 0 )
     {
-        if(list[index].isEmpty==0)
+        if(list[index].isEmpty == 0)
         {
-            printf("Id del cliente: %d - Nombre: %s - Apellido: %s - Cuit: %s.\n", list[index].id, list[index].name, list[index].lastName, list[index].cuit);
+            printf("ID del cliente: %d - Nombre: %s - Apellido: %s - Cuit: %s.\n", list[index].id, list[index].name, list[index].lastName, list[index].cuit);
             retorno = 0;
         }
         else

@@ -182,7 +182,7 @@ static int isName(char* cadena,int len)
  * 	         si es un cuit valido.
  * \ param - char* cadena, cadena a analizar.
  * \ param - int len, indica la cantidad de letras maximas de la cadena.
- * \ return - (1) Indica que es un nombre valido / (0) Indica que no es un nombre valido.
+ * \ return - (1) Indica que es un cuit valido / (0) Indica que no es un cuit valido.
  */
 static int isCuit(char* cadena,int len)
 {
@@ -201,10 +201,10 @@ static int isCuit(char* cadena,int len)
 }
 /*
  * \ brief - Verifica una cadena recibida como parametro para determinar
- * 	         si es un numero valido.
+ * 	         si es un entero valido.
  * \ param - char* cadena, cadena a analizar.
  * \ param - int len, indica la cantidad de numeros maximas de la cadena.
- * \ return - (1) Indica que es un nombre valido / (0) Indica que no es un nombre valido.
+ * \ return - (1) Indica que es un entero valido / (0) Indica que no es un entero valido.
  */
 static int isNumberInt(char* cadena, int len)
 {
@@ -227,10 +227,10 @@ static int isNumberInt(char* cadena, int len)
 }
 /*
  * \ brief - Verifica una cadena recibida como parametro para determinar
- * 	         si es un salario valido.
+ * 	         si es un flotante valido.
  * \ param - char* cadena, cadena a analizar.
  * \ param - int len, indica la cantidad de numeros maximas de la cadena.
- * \ return - (1) Indica que es un nombre valido / (0) Indica que no es un nombre valido.
+ * \ return - (1) Indica que es un flotante valido / (0) Indica que no es un flotante valido.
  */
 static int isFloat(char* cadena, int len)
 {
@@ -264,20 +264,20 @@ static int isFloat(char* cadena, int len)
  * 	         si es un texto valido.
  * \ param - char* cadena, cadena a analizar.
  * \ param - int len, indica la cantidad de letras maximas de la cadena.
- * \ return - (1) Indica que es un nombre valido / (0) Indica que no es un nombre valido.
+ * \ return - (1) Indica que es un texto valido / (0) Indica que no es un texto valido.
  */
 static int isText(char* cadena,int len)
 {
-	int respuesta = 1; // Todo bien.
+	int respuesta = 0; // Todo bien.
 
 	for (int i = 0; i <= len && cadena[i] != '\0'; i++)
 	{
-		if(	(cadena[i] < 'A' || cadena[i] > 'Z' ) &&
-			(cadena[i] < 'a' || cadena[i] > 'z' ) &&
-			(cadena[i] < '0' || cadena[i] > '9' ) &&
-			cadena[i] != ' ')
+		if(	(cadena[i] >= 'A' && cadena[i] <= 'Z' ) ||
+			(cadena[i] >= 'a' && cadena[i] <= 'z' ) ||
+			(cadena[i] >= '0' && cadena[i] <= '9' ) ||
+			cadena[i] == ' ')
 		{
-			respuesta = 0;
+			respuesta = 1;
 			break;
 		}
 	}
