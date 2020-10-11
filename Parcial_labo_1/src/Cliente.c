@@ -236,10 +236,6 @@ int cli_findFree(Cliente* list, int len, int* pIndex)
 				retorno = 0;
 				break;
 			}
-			else
-			{
-				printf("No hay espacios libres para dar de alta.");
-			}
 		}
 	}
 	return retorno;
@@ -291,6 +287,34 @@ int cli_show(Cliente* list,int index)
         {
             printf("El cliente no existe.");
         }
+    }
+    return retorno;
+}
+/**
+ * \brief Realiza un alta forzada de un elemento.
+ * \param Cliente* list, Es el puntero al array.
+ * \param int len, es el limite de array
+ * \param char* name, Puntero al espacio de memoria.
+ * \param char* lastName, Puntero al espacio de memoria.
+ * \param char* cuit, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
+int cli_altaForzada(Cliente* list, int len, char* name, char* lastName, char* cuit)
+{
+    int retorno = -1;
+    int index;
+
+    if(list != NULL && len > 0 && name != NULL && lastName != NULL && cuit != NULL)
+    {
+		if(cli_findFree(list, len, &index) == 0)
+		{
+			strncpy(list[index].name, name, LONG_NAME);
+			strncpy(list[index].lastName, lastName, LONG_NAME);
+			strncpy(list[index].cuit, cuit, LONG_CUIT);
+			list[index].id = generateNewId();
+			list[index].isEmpty = 0;
+			retorno = 0;
+		}
     }
     return retorno;
 }

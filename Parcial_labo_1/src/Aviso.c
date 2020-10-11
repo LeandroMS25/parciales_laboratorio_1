@@ -266,10 +266,6 @@ int avi_findFree(Aviso* list, int len, int* pIndex)
 				retorno = 0;
 				break;
 			}
-			else
-			{
-				printf("No hay espacios libres para dar de alta.");
-			}
 		}
 	}
 	return retorno;
@@ -303,20 +299,18 @@ int avi_findOccupied(Aviso* list, int len)
  * \brief Imprime los avisos activos o pausados.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
- * \param Cliente* listCliente, Es el puntero al array.
- * \param int lenCliente, es el limite de array.
  * \param int state, indica el estado de los avisos.
  * \return (-1) Error / (0) Ok
  */
-int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, Cliente* listCliente, int lenCliente, int state)
+int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state)
 {
     int retorno = -1;
 
-    if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0 && (state >= 0 || state <= 1))
+    if(list != NULL && len > 0 && (state >= 0 || state <= 1))
     {
         for(int i=0;i<len;i++)
         {
-            if(list[i].isEmpty == 0 && list[i].estado == state)
+            if(list[i].estado == state && list[i].isEmpty == 0)
             {
             	avi_show(list, i);
                 retorno = 0;
@@ -344,13 +338,14 @@ int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, 
 
 	if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0 && (state >= 0 || state <= 1))
 	{
-		avi_mostrarAvisosPausadosOActivos(list, len, listCliente, lenCliente, !state);
-		if( ((state == 1 && utn_getNumberInt(&idChange, "Ingrese el id del aviso que quiere reanudar: ", "\nError.", 1, INT_MAX, 2) == 0 &&
-			avi_findById(list, len, idChange, &indexChange) == 0 && cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 &&
-			cli_show(listCliente, indexCliente) == 0) ||
+		avi_mostrarAvisosPausadosOActivos(list, len, !state);
+		if( ((state == 1 && utn_getNumberInt(&idChange, "Ingrese el ID del aviso que quiere reanudar: ", "\nError.", 1, INT_MAX, 2) == 0 &&
+			avi_findById(list, len, idChange, &indexChange) == 0 && list[indexChange].estado != state &&
+			cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 && cli_show(listCliente, indexCliente) == 0)
+				||
 			(state == 0 && utn_getNumberInt(&idChange, "Ingrese el id del aviso que quiere pausar: ", "\nError.", 1, INT_MAX, 2) == 0 &&
-			avi_findById(list, len, idChange, &indexChange) == 0 && cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 &&
-			cli_show(listCliente, indexCliente) == 0)) &&
+			avi_findById(list, len, idChange, &indexChange) == 0 && list[indexChange].estado != state
+			&& cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 && cli_show(listCliente, indexCliente) == 0)) &&
 			utn_getNumberInt(&respuesta, "¿Desea cambiar el estado del aviso? (1- Si. / 2- No.)", "\nError.", SI, NO, 2) == 0)
 		{
 			if(respuesta == 1)
@@ -363,8 +358,66 @@ int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, 
 				printf("Se cancelo el cambio de estado del aviso.\n");
 			}
 		}
+		else
+		{
+			printf("No se puede cambiar el estado del ID seleccionado.\n");
+		}
 	}
 	return retorno;
+}
+/**
+ * \brief Imprime los avisos activos o pausados.
+ * \param Aviso* list, Es el puntero al array
+ * \param int len, es el limite de array
+ * \return (-1) Error / (0) Ok
+ */
+int avi_contarAvisosPausados(Aviso* list, int len)
+{
+    int retorno = -1;
+    int contadorPausados = 0;
+
+    if(list != NULL && len > 0)
+    {
+        for(int i=0;i<len;i++)
+        {
+            if(list[i].estado == 0 && list[i].isEmpty == 0)
+            {
+            	contadorPausados++;
+            }
+        }
+        printf("La cantidad de avisos pausados es: %d.\n",contadorPausados);
+        retorno = 0;
+    }
+    return retorno;
+}
+/**
+ * \brief Realiza un alta forzada de un elemento.
+ * \param Cliente* list, Es el puntero al array.
+ * \param int len, es el limite de array
+ * \param int idCliente, indica el id del cliente.
+ * \param int rubro, indica el rubro del aviso.
+ * \param char* texto, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
+int avi_altaForzada(Aviso* list, int len, int idCliente, int rubro, char* texto)
+{
+    int retorno = -1;
+    int index;
+
+    if(list != NULL && len > 0 && idCliente > 0 && rubro > 0 && texto != NULL)
+    {
+		if(avi_findFree(list, len, &index) == 0)
+		{
+			strncpy(list[index].text, texto, LONG_TEXTO);
+			list[index].idCliente = idCliente;
+			list[index].rubro = rubro;
+			list[index].estado = ACTIVO;
+			list[index].idAviso = generateNewId();
+			list[index].isEmpty = 0;
+			retorno = 0;
+		}
+    }
+    return retorno;
 }
 /**
  * \brief Incrementa el id y lo retorna.

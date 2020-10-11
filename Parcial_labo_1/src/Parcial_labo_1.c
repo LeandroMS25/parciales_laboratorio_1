@@ -20,11 +20,29 @@ int main(void)
 	Aviso listAviso[QTY_AVI];
 	int optionMain;
 	int optionReport;
+	int flagPause = 0;
 
 	cli_init(listCliente, QTY_CLI);
 	avi_init(listAviso, QTY_AVI);
+
+	cli_altaForzada(listCliente, QTY_CLI,"Juan","Alvaro","20-16597452-9");
+	cli_altaForzada(listCliente, QTY_CLI,"Jose","Perez","20-12643526-9");
+	cli_altaForzada(listCliente, QTY_CLI,"Noco","Lomo","20-79164125-9");
+	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Merino","20-12387456-9");
+	cli_altaForzada(listCliente, QTY_CLI,"Claudio","Manzano","20-12347865-9");
+
+	avi_altaForzada(listAviso, QTY_AVI,2,4,"VendoClio2010");
+	avi_altaForzada(listAviso, QTY_AVI,1,4,"VendoAutos");
+	avi_altaForzada(listAviso, QTY_AVI,2,4,"VendoMotos");
+	avi_altaForzada(listAviso, QTY_AVI,3,4,"VendoCarros");
+
 	do
 	{
+		if(flagPause)
+		{
+			system("pause");
+			system("cls");
+		}
 		utn_showMainMenu(&optionMain);
 		switch (optionMain)
 		{
@@ -75,7 +93,7 @@ int main(void)
 							printf("Opcion 1.\n");
 							break;
 						case 2:
-							printf("Opcion 2.\n");
+							avi_contarAvisosPausados(listAviso, QTY_AVI);
 							break;
 						case 3:
 							printf("Opcion 3.\n");
@@ -86,5 +104,6 @@ int main(void)
 				}
 				break;
 		}
+		flagPause = 1;
 	}while(optionMain != OPTIONS_MAIN);
 }

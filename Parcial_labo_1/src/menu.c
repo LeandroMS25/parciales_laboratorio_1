@@ -53,7 +53,7 @@ int utn_showReportMenu(int* pOption)
 									"1- Cliente con mas avisos.\n"
 									"2- Cantidad de avisos pausados.\n"
 									"3- Rubro con mas avisos.\n"
-									"4- Salir.\n"
+									"4- Salir.\n\n"
 									"Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS_REPORT, 2) == 0)
 		{
 			*pOption = option;

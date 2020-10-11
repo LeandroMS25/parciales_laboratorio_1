@@ -33,6 +33,9 @@ int avi_findById(Aviso* list, int len, int id, int* pIndex);
 int avi_findFree(Aviso* list, int len, int* pIndex);
 int avi_findOccupied(Aviso* list, int len);
 int avi_sortByName(Aviso* list, int len, int order);
+int avi_altaForzada(Aviso* list, int len, int idCliente, int rubro, char* texto);
+int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state);
 int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, int state);
+int avi_contarAvisosPausados(Aviso* list, int len);
 
 #endif /* AVISO_H_ */
