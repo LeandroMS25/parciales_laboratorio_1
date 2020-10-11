@@ -1,0 +1,12 @@
+/*
+ * menu.h
+ * Author: Leandro Sobrino
+ */
+
+#ifndef MENU_H_
+#define MENU_H_
+
+#define OPTIONS_MAIN
+#define OPTIONS_REPORT
+
+#endif /* MENU_H_ */

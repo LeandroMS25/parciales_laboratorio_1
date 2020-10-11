@@ -1,0 +1,18 @@
+/*
+ * menu.c
+ * Author: Leandro Sobrino
+ */
+#include <stdio.h>
+#include <stdlib.h>
+
+int utn_showMainMenu(int* pOption)
+{
+	int retorno = -1;
+
+	if(pOption != NULL)
+	{
+
+	}
+	return retorno;
+}
+

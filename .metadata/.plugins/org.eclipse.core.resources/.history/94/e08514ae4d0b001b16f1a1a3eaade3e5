@@ -1,0 +1,31 @@
+/*
+ * menu.c
+ * Author: Leandro Sobrino
+ */
+#include <stdio.h>
+#include <stdlib.h>
+
+int utn_showMainMenu(int* pOption)
+{
+	int retorno = -1;
+
+	if(pOption != NULL)
+	{
+		fflush(stdin);
+		// file get string.
+		if(fgets(bufferString,sizeof(bufferString), stdin) != NULL)
+		{
+			if(bufferString[strnlen(bufferString,sizeof(bufferString)) - 1] == '\n')
+			{
+				bufferString[strnlen(bufferString,sizeof(bufferString)) - 1] = '\0';
+			}
+			if(strnlen(bufferString,sizeof(bufferString)) <= longitud)
+			{
+				strncpy(cadena, bufferString,longitud);
+				retorno = 0;
+			}
+		}
+	}
+	return retorno;
+}
+

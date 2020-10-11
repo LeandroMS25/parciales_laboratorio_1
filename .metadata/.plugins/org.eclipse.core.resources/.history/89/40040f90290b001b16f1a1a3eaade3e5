@@ -1,0 +1,88 @@
+/*
+ ============================================================================
+ Name        : Parcial_labo_1.c
+ Author      : Leandro Sobrino
+ Description : Primer parcial - Laboratorio 1.
+ ============================================================================
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "Aviso.h"
+#include "Cliente.h"
+#include "validaciones.h"
+
+#define QTY_CLI 100
+#define QTY_AVI 1000
+#define OPTIONS 10
+
+int main(void)
+{
+	setbuf(stdout,NULL);
+	Cliente listCliente[QTY_CLI];
+	Aviso listAviso[QTY_AVI];
+	int opcion;
+
+	cli_init(listCliente, QTY_CLI);
+	avi_init(listAviso, QTY_AVI);
+	do
+	{
+		utn_getNumberInt(&opcion, "***Menu de opciones***\n\n"
+								  "1- Alta de pantalla.\n"
+								  "2- Modificar datos de la pantalla.\n"
+								  "3- Baja de pantalla.\n"
+								  "4- Alta de Aviso.\n"
+								  "5- Modificar Aviso.\n"
+								  "6- Eliminar Aviso.\n"
+								  "7- Consulta de facturacion\n"
+				 	 	 	 	  "8- Imprimir listado de Avisoes.\n"
+								  "9- Imprimir listado de pantallas.\n"
+								  "10- Salir.\n\n"
+								  "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS, 2);
+		switch (opcion)
+		{
+			case 1:
+				if(cli_add(listCliente, QTY_CLI) == 0)
+				{
+					printf("La pantalla se cargo correctamente.\n");
+				}
+				break;
+			case 2:
+				if(cli_modify(listCliente, QTY_CLI) == 0)
+				{
+					printf("La pantalla se modifico correctamente.\n");
+				}
+				break;
+			case 3:
+				if(cli_remove(listCliente, QTY_CLI) == 0)
+				{
+					printf("La pantalla se borro correctamente.\n");
+				}
+				break;
+			case 4:
+				if(avi_add(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
+				{
+					printf("La contratación fue realizada correctamente.\n");
+				}
+				break;
+			case 5:
+				if(avi_modify(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
+				{
+					printf("La contratación fue modificada correctamente.\n");
+				}
+				break;
+			case 6:
+				if(avi_remove(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
+				{
+					printf("La contratación fue elimanada correctamente.\n");
+				}
+				break;
+			case 8:
+				avi_print(listAviso, QTY_AVI,listCliente, QTY_CLI);
+				break;
+			case 9:
+				cli_print(listCliente, QTY_CLI);
+				break;
+		}
+	}while(opcion != OPTIONS);
+}
