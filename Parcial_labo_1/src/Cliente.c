@@ -274,7 +274,8 @@ int cli_show(Cliente* list,int index)
     {
         if(list[index].isEmpty == 0)
         {
-            printf("ID del cliente: %d - Nombre: %s - Apellido: %s - Cuit: %s.\n", list[index].id, list[index].name, list[index].lastName, list[index].cuit);
+            printf("ID del cliente: %d - Nombre: %s - Apellido: %s - Cuit: %s.\n",
+            		list[index].id, list[index].name, list[index].lastName, list[index].cuit);
             retorno = 0;
         }
         else

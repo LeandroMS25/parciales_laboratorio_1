@@ -38,5 +38,7 @@ int avi_sortByRubro(Aviso* list, int len, int order);
 int avi_altaForzada(Aviso* list, int len, int idCliente, int rubro, char* texto);
 int avi_contarAvisosPausados(Aviso* list, int len);
 int avi_contarAvisosActivosPorId(Aviso* list, int len, int id);
+int avi_contarAvisosPorId(Aviso* list, int len, int id, int* pContador);
+int avi_printClientWithMoreAdvices(Aviso* list, int len, Cliente* listCliente, int lenCliente);
 
 #endif /* AVISO_H_ */

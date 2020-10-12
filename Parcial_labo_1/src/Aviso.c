@@ -308,7 +308,8 @@ int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state)
  * \brief Imprime la lista de clientes.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
- * \param int state, indica el estado de los avisos.
+ * \param Cliente* listCliente, Es el puntero al array.
+ * \param int lenCliente, es el limite de array.
  * \return (-1) Error / (0) Ok
  */
 int avi_printClientes(Aviso* list, int len, Cliente* listCliente, int lenCliente)
@@ -404,9 +405,10 @@ int avi_contarAvisosPausados(Aviso* list, int len)
     return retorno;
 }
 /**
- * \brief Cuenta la cantidad de avisos pausados.
+ * \brief Cuenta la cantidad de avisos activos segun id.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
+ * \param int id, recibira el id del cliente.
  * \return (-1) Error / (0) Ok
  */
 int avi_contarAvisosActivosPorId(Aviso* list, int len, int id)
@@ -414,7 +416,7 @@ int avi_contarAvisosActivosPorId(Aviso* list, int len, int id)
     int retorno = -1;
     int contadorActivos = 0;
 
-    if(list != NULL && len > 0)
+    if(list != NULL && len > 0 && id > 0)
     {
         for(int i=0;i<len;i++)
         {
@@ -424,6 +426,62 @@ int avi_contarAvisosActivosPorId(Aviso* list, int len, int id)
             }
         }
         printf("El cliente tiene %d avisos activos.\n",contadorActivos);
+        retorno = 0;
+    }
+    return retorno;
+}
+/**
+ * \brief Cuenta la cantidad de avisos segun id.
+ * \param Aviso* list, Es el puntero al array
+ * \param int len, es el limite de array
+ * \param int id, recibira el id del cliente.
+ * \return (-1) Error / (0) Ok
+ */
+int avi_contarAvisosPorId(Aviso* list, int len, int id,int* pContador)
+{
+    int retorno = -1;
+    int contador = 0;
+
+    if(list != NULL && len > 0 && id > 0)
+    {
+        for(int i=0;i<len;i++)
+        {
+            if(list[i].isEmpty == 0 && list[i].idCliente == id)
+            {
+            	contador++;
+            }
+        }
+        *pContador = contador;
+        retorno = 0;
+    }
+    return retorno;
+}
+/**
+ * \brief Imprime el cliente que tenga mas avisos.
+ * \param Aviso* list, Es el puntero al array
+ * \param int len, es el limite de array
+ * \param int state, indica el estado de los avisos.
+ * \return (-1) Error / (0) Ok
+ */
+int avi_printClientWithMoreAdvices(Aviso* list, int len, Cliente* listCliente, int lenCliente)
+{
+    int retorno = -1;
+    Cliente aux;
+    int contadorMaximo = 0;
+    int contadorAux;
+
+    if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
+    {
+        for(int i=0;i<lenCliente;i++)
+        {
+            if( listCliente[i].isEmpty == 0 &&
+				avi_contarAvisosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && contadorAux >= contadorMaximo)
+            {
+            	aux = listCliente[i];
+            	contadorMaximo = contadorAux;
+            }
+        }
+        printf("El cliente con mas avisos creados es %s %s %s.\n", aux.name, aux.lastName, aux.cuit);
         retorno = 0;
     }
     return retorno;

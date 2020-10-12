@@ -1,6 +1,7 @@
-17:25:39 **** Incremental Build of configuration Debug for project Parcial_labo_1 ****
+23:09:38 **** Incremental Build of configuration Debug for project Parcial_labo_1 ****
 Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Aviso.o" "..\\src\\Aviso.c" 
 gcc -o Parcial_labo_1.exe "src\\Aviso.o" "src\\Cliente.o" "src\\Parcial_labo_1.o" "src\\menu.o" "src\\validaciones.o" 
 
-17:25:40 Build Finished. 0 errors, 0 warnings. (took 139ms)
+23:09:38 Build Finished. 0 errors, 0 warnings. (took 333ms)
 

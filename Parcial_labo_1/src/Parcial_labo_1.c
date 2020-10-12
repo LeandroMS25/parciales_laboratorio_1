@@ -77,7 +77,7 @@ int main(void)
 				}
 				break;
 			case 7:
-				avi_printClientes(listAviso, QTY_AVI, listCliente, QTY_CLI)
+				avi_printClientes(listAviso, QTY_AVI, listCliente, QTY_CLI);
 				break;
 			case 8:
 				if(utn_showReportMenu(&optionReport) == 0)
@@ -85,7 +85,7 @@ int main(void)
 					switch (optionReport)
 					{
 						case 1:
-							printf("Opcion 1.\n");
+							avi_printClientWithMoreAdvices(listAviso, QTY_AVI, listCliente, QTY_CLI);
 							break;
 						case 2:
 							avi_contarAvisosPausados(listAviso, QTY_AVI);
