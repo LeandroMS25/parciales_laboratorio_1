@@ -11,7 +11,17 @@
 #include "Cliente.h"
 #include "validaciones.h"
 
+typedef struct
+{
+	int tipo;
+	int isEmpty;
+}Rubro;
+
 static int generateNewId(void);
+static void rub_init(Rubro* listRubro, int lenRubro);
+static void rub_generarListaDeRubro(Rubro* listRubro, int lenRubro, Aviso* list);
+static int rub_estaEnMiListaDeRubro(Rubro* listRubro, int lenRubro, int rubro);
+static int rub_printRubroConMasAvisos(Aviso* list, int len, Rubro* listRubro);
 /**
  * \brief Inicializa el array .
  * \param Aviso list, Es el puntero al array.
@@ -57,7 +67,7 @@ int avi_add(Aviso* list, int len, Cliente* listCliente, int lenCliente)
 			cli_findById(listCliente, lenCliente, idCliente, &indexCliente) == 0 &&
 			avi_findFree(list, len, &index) == 0 && index < len &&
 			utn_getNumberInt(&buffer.rubro, "Ingrese el rubro del aviso: ", "Rubro invalido.\n", 1, QTY_AVI, 2) == 0 &&
-			utn_getName(buffer.text, "Ingrese el texto que desea publicar: ", "Texto invalido.\n", 2, LONG_TEXTO) == 0)
+			utn_getText(buffer.text, "Ingrese el texto que desea publicar: ", "Texto invalido.\n", 2, LONG_TEXTO) == 0)
 		{
 			buffer.isEmpty = 0;
 			buffer.estado = ACTIVO;
@@ -113,6 +123,7 @@ int avi_remove(Aviso* list, int len, Cliente* listCliente, int lenCliente)
 {
 	int retorno = -1;
 	int idClienteRemove;
+	int indexClienteRemove;
 	int respuesta;
 	int i;
 
@@ -120,23 +131,30 @@ int avi_remove(Aviso* list, int len, Cliente* listCliente, int lenCliente)
 	{
 		cli_print(listCliente, lenCliente);
 		if( utn_getNumberInt(&idClienteRemove, "Ingrese el id del cliente que se quiere eliminar: ", "ID invalido.\n", 1, INT_MAX, 2) == 0 &&
+			cli_findById(listCliente, lenCliente, idClienteRemove, &indexClienteRemove) == 0 && listCliente[indexClienteRemove].isEmpty == 0 &&
 			avi_printByIdCliente(list, len, listCliente, lenCliente, idClienteRemove) == 0 &&
-			utn_getNumberInt(&respuesta, "El cliente y sus avisos se borraran ¿Desea continuar? (1- Si/2- No): ", "Error.\n", SI, NO, 2) == 0 &&
-			respuesta == 1)
-		{
-			for (i = 0; i < len; i++)
+			utn_getNumberInt(&respuesta, "El cliente y sus avisos se borraran ¿Desea continuar? (1- Si/2- No): ", "Error.\n", SI, NO, 2) == 0)
+ 		{
+			if(respuesta == 1)
 			{
-				if(list[i].idCliente == idClienteRemove)
+				for (i = 0; i < len; i++)
 				{
-					list[i].isEmpty = 1;
+					if(list[i].idCliente == idClienteRemove)
+					{
+						list[i].isEmpty = 1;
+					}
 				}
+				cli_remove(listCliente, lenCliente, idClienteRemove);
+				retorno = 0;
 			}
-			cli_remove(listCliente, lenCliente, idClienteRemove);
-			retorno = 0;
+			else
+			{
+				printf("Se cancelo la eliminación del cliente.\n");
+			}
 		}
 		else
 		{
-			printf("Se cancelo la eliminación del cliente.");
+			printf("No se puede borrar el cliente seleccionado.\n");
 		}
 	}
 	return retorno;
@@ -161,8 +179,10 @@ int avi_sortByRubro(Aviso* list, int len, int order)
 			flagSwap = 0;
 			for (i = 0; i < (len - 1); i++)
 			{
-				if(1)
-
+				if(	(order == 1 &&
+					list[i].rubro < list[i+1].rubro) ||
+					(order == 0 &&
+					list[i].rubro > list[i+1].rubro))
 				{
 					aux = list[i];
 					list[i] = list[i+1];
@@ -318,16 +338,12 @@ int avi_printClientes(Aviso* list, int len, Cliente* listCliente, int lenCliente
 
     if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
     {
-        for(int i=0;i<len;i++)
+        for(int i=0;i<lenCliente;i++)
         {
             if(listCliente[i].isEmpty == 0 && cli_show(listCliente, i) == 0)
             {
             	avi_contarAvisosActivosPorId(list, len, listCliente[i].id);
                 retorno = 0;
-            }
-            else
-            {
-            	break;
             }
         }
     }
@@ -457,6 +473,32 @@ int avi_contarAvisosPorId(Aviso* list, int len, int id,int* pContador)
     return retorno;
 }
 /**
+ * \brief Cuenta la cantidad de avisos por rubro.
+ * \param Aviso* list, Es el puntero al array
+ * \param int len, es el limite de array
+ * \param int id, recibira el id del cliente.
+ * \return (-1) Error / (0) Ok
+ */
+int avi_contarAvisosPorRubro(Aviso* list, int len, int rubro, int* pContador)
+{
+    int retorno = -1;
+    int contador = 0;
+
+    if(list != NULL && len > 0 && rubro > 0)
+    {
+        for(int i=0;i<len;i++)
+        {
+            if(list[i].isEmpty == 0 && list[i].rubro == rubro)
+            {
+            	contador++;
+            }
+        }
+        *pContador = contador;
+        retorno = 0;
+    }
+    return retorno;
+}
+/**
  * \brief Imprime el cliente que tenga mas avisos.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
@@ -481,7 +523,37 @@ int avi_printClientWithMoreAdvices(Aviso* list, int len, Cliente* listCliente, i
             	contadorMaximo = contadorAux;
             }
         }
-        printf("El cliente con mas avisos creados es %s %s %s.\n", aux.name, aux.lastName, aux.cuit);
+        printf("El cliente con mas avisos creados (%d) es %s %s - Cuit: %s.\n", contadorMaximo, aux.name, aux.lastName, aux.cuit);
+        retorno = 0;
+    }
+    return retorno;
+}
+/**
+ * \brief Imprime el rubro que tenga mas avisos.
+ * \param Aviso* list, Es el puntero al array
+ * \param int len, es el limite de array
+ * \param int state, indica el estado de los avisos.
+ * \return (-1) Error / (0) Ok
+ */
+static int rub_printRubroConMasAvisos(Aviso* list, int len, Rubro* listRubro)
+{
+    int retorno = -1;
+    Aviso aux;
+    int contadorMaximo = 0;
+    int contadorAux;
+
+    if(list != NULL && len > 0)
+    {
+        for(int i=0;i<len;i++)
+        {
+            if( list[i].isEmpty == 0 &&
+				avi_contarAvisosPorRubro(list, len, list[i].rubro, &contadorAux) == 0 && contadorAux >= contadorMaximo)
+            {
+            	aux = list[i];
+            	contadorMaximo = contadorAux;
+            }
+        }
+        printf("El rubro con mas avisos creados (%d) es el %d.\n", contadorMaximo, aux.rubro);
         retorno = 0;
     }
     return retorno;
@@ -525,4 +597,92 @@ static int generateNewId(void)
 
 	id++;
 	return id;
+}
+/**
+ * \brief Inicializa el array .
+ * \param Rubro* listRubro, Es el puntero al array.
+ * \param int lenRubro, es el limite de array.
+ */
+static void rub_init(Rubro* listRubro, int lenRubro)
+{
+	int i;
+
+	if (listRubro != NULL && lenRubro > 0)
+	{
+		for (i = 0; i < lenRubro; i++)
+		{
+			listRubro[i].isEmpty = 1;
+		}
+	}
+}
+/**
+ * \brief Se chequea si el rubro comparado ya se encuentra en la lista de rubros.
+ * \param Rubro* listRubro, Es el puntero al array.
+ * \param int lenRubro, es el limite de array.
+ * \param int rubro, indica el rubro que se va a comparar
+ * \return (-1) Error / (0) Ok
+ */
+static int rub_estaEnMiListaDeRubro(Rubro* listRubro, int lenRubro, int rubro)
+{
+	int i;
+	int retorno=0;
+
+	if (listRubro != NULL && lenRubro > 0 && rubro > 0)
+	{
+		for(i=0; i<lenRubro; i++)
+		{
+			if(listRubro[i].isEmpty == 0 && listRubro[i].tipo == rubro)
+			{
+				retorno=1;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+/**
+ * \brief Genera la lista de rubros
+ * \param Rubro* listRubro, Es el puntero al array.
+ * \param int lenRubro, es el limite de array.
+ * \param int rubro, indica el rubro que se va a comparar
+ * \return (-1) Error / (0) Ok
+ */
+static void rub_generarListaDeRubro(Rubro* listRubro, int lenRubro, Aviso* list)
+{
+	int i;
+	int indexRubro = 0;
+
+	if (listRubro != NULL && lenRubro > 0 && list != NULL)
+	{
+		rub_init(listRubro,lenRubro);
+		for(i=0;i<lenRubro; i++)
+		{
+			if(rub_estaEnMiListaDeRubro(listRubro, lenRubro, list[i].rubro) == 0)
+			{
+				listRubro[i].tipo = list[i].rubro;
+				listRubro[indexRubro].isEmpty = 0;
+				indexRubro++;
+			}
+		}
+	}
+}
+/**
+ * \brief Genera la lista de rubros
+ * \param Rubro* listRubro, Es el puntero al array.
+ * \param int lenRubro, es el limite de array.
+ * \param int rubro, indica el rubro que se va a comparar
+ * \return (-1) Error / (0) Ok
+ */
+int rub_generarInformeDeRubro(Aviso* list)
+{
+	int retorno = -1;
+	Rubro listRubro[QTY_AVI];
+
+	if (list != NULL)
+	{
+		rub_generarListaDeRubro(listRubro, QTY_AVI, list);
+		rub_printRubroConMasAvisos(list, QTY_AVI, listRubro);
+		retorno = 0;
+	}
+	return retorno;
 }

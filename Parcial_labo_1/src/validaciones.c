@@ -17,7 +17,6 @@ static int isName(char* cadena,int len); // Se utilizo en getName.
 static int getCuit(char* pResultado,int len); // Se utilizo en utn_getCuit.
 static int isCuit(char* cadena,int len); // Se utilizo en getCuit.
 static int getText(char* pResultado,int len); // Se utilizo en utn_getText.
-static int isText(char* cadena,int len); // Se utilizo en getText.
 /**
  * \brief	Lee el stdin hasta que encuentra un '\0' o hasta que haya copiado en cadena
  * 			un maximo de 'len - 1' caracteres.
@@ -146,8 +145,7 @@ static int getText(char* pResultado,int len)
 	if(pResultado != NULL && len > 0)
 	{
 		fflush(stdin);
-		if(	myGets(bufferString,sizeof(bufferString)) == 0 &&
-			isText(bufferString,LEN_BUFFER_STRING) == 1)
+		if(	myGets(bufferString,sizeof(bufferString)) == 0)
 		{
 			strncpy(pResultado,bufferString,len);
 			retorno = 0;
@@ -255,30 +253,6 @@ static int isFloat(char* cadena, int len)
 				respuesta = 0;
 				break;
 			}
-		}
-	}
-	return respuesta;
-}
-/*
- * \ brief - Verifica una cadena recibida como parametro para determinar
- * 	         si es un texto valido.
- * \ param - char* cadena, cadena a analizar.
- * \ param - int len, indica la cantidad de letras maximas de la cadena.
- * \ return - (1) Indica que es un texto valido / (0) Indica que no es un texto valido.
- */
-static int isText(char* cadena,int len)
-{
-	int respuesta = 0; // Todo bien.
-
-	for (int i = 0; i <= len && cadena[i] != '\0'; i++)
-	{
-		if(	(cadena[i] >= 'A' && cadena[i] <= 'Z' ) ||
-			(cadena[i] >= 'a' && cadena[i] <= 'z' ) ||
-			(cadena[i] >= '0' && cadena[i] <= '9' ) ||
-			cadena[i] == ' ')
-		{
-			respuesta = 1;
-			break;
 		}
 	}
 	return respuesta;
