@@ -335,14 +335,17 @@ int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state)
 int avi_printClientes(Aviso* list, int len, Cliente* listCliente, int lenCliente)
 {
     int retorno = -1;
+    int contador;
 
     if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
     {
+    	printf("ID     NOMBRE       APELLIDO        CUIT               AVISOS ACTIVOS\n");
         for(int i=0;i<lenCliente;i++)
         {
-            if(listCliente[i].isEmpty == 0 && cli_show(listCliente, i) == 0)
+            if(listCliente[i].isEmpty == 0 && avi_contarAvisosActivosPorId(list, len, listCliente[i].id, &contador) == 0)
             {
-            	avi_contarAvisosActivosPorId(list, len, listCliente[i].id);
+            	printf("%-6d %-12s %-15s %-18s %d \n"
+            			,listCliente[i].id ,listCliente[i].name ,listCliente[i].lastName ,listCliente[i].cuit ,contador);
                 retorno = 0;
             }
         }
@@ -427,7 +430,7 @@ int avi_contarAvisosPausados(Aviso* list, int len)
  * \param int id, recibira el id del cliente.
  * \return (-1) Error / (0) Ok
  */
-int avi_contarAvisosActivosPorId(Aviso* list, int len, int id)
+int avi_contarAvisosActivosPorId(Aviso* list, int len, int id, int* pContador)
 {
     int retorno = -1;
     int contadorActivos = 0;
@@ -441,7 +444,7 @@ int avi_contarAvisosActivosPorId(Aviso* list, int len, int id)
             	contadorActivos++;
             }
         }
-        printf("El cliente tiene %d avisos activos.\n",contadorActivos);
+        *pContador = contadorActivos;
         retorno = 0;
     }
     return retorno;

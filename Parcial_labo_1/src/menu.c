@@ -13,12 +13,12 @@
  * \param	int* pOption, puntero a un espacio de memoria.
  * \return	Retorna 0 (exito)y -1 (error).
  */
-int utn_showMainMenu(int* pOption)
+int utn_showMainMenu(int* pOption, Aviso* listAviso, int lenAviso, Cliente* listCliente, int lenCliente)
 {
 	int retorno = -1;
 	int option;
 
-	if(pOption != NULL)
+	if(pOption != NULL && listAviso != NULL && lenAviso > 0 && listCliente != NULL && lenCliente  > 0)
 	{
 		if(utn_getNumberInt(&option, "***Menu de opciones***\n\n"
 									 "1- Alta del cliente.\n"
@@ -30,10 +30,22 @@ int utn_showMainMenu(int* pOption)
 									 "7- Imprimir listado de clientes.\n"
 									 "8- Informar.\n"
 									 "9- Salir.\n\n"
-									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS_MAIN, 2) == 0)
+									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS_MAIN, 2) == 0 &&
+		cli_findOccupied(listCliente, lenCliente) != 0	&& (option > 1 && option < 9))
 		{
-			*pOption = option;
-			retorno = 0;
+			printf("Antes se debe ingresar un cliente.\n");
+		}
+		else
+		{
+			if(avi_findOccupied(listAviso, lenAviso) != 0 && (option > 4 && option < 9))
+			{
+				printf("Antes se debe publicar un aviso.\n");
+			}
+			else
+			{
+				*pOption = option;
+				retorno = 0;
+			}
 		}
 	}
 	return retorno;

@@ -237,10 +237,9 @@ int cli_findFree(Cliente* list, int len, int* pIndex)
  * \brief Busca un espacio ocupado en el array.
  * \param Cliente* list, Es el puntero al array.
  * \param int len, es el limite de array.
- * \param int* pIndex, puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
-int cli_findOccupied(Cliente* list, int len, int* pIndex)
+int cli_findOccupied(Cliente* list, int len)
 {
 	int retorno = -1;
 	int i;
@@ -251,7 +250,6 @@ int cli_findOccupied(Cliente* list, int len, int* pIndex)
 		{
 			if(list[i].isEmpty == 0)
 			{
-				*pIndex = i;
 				retorno = 0;
 				break;
 			}

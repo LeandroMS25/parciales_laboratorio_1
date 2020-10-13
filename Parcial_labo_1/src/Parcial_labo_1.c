@@ -26,7 +26,7 @@ int main(void)
 
 	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-39107331-9");
 	cli_altaForzada(listCliente, QTY_CLI,"Jorge","Suarez","20-31388898-4");
-	cli_altaForzada(listCliente, QTY_CLI,"Nico","Ramos","23-38165869-3");
+	cli_altaForzada(listCliente, QTY_CLI,"Nicolas","Ramos","23-38165869-3");
 	cli_altaForzada(listCliente, QTY_CLI,"Laura","Ochoa","27-35098981-7");
 	cli_altaForzada(listCliente, QTY_CLI,"Florencia","Ayala","27-40189698-8");
 
@@ -42,7 +42,8 @@ int main(void)
 
 	do
 	{
-		utn_showMainMenu(&optionMain);
+		optionMain = 0;
+		utn_showMainMenu(&optionMain, listAviso, QTY_AVI, listCliente, QTY_CLI);
 		switch (optionMain)
 		{
 			case 1:
@@ -105,6 +106,9 @@ int main(void)
 							break;
 					}
 				}
+				break;
+			case 9:
+				printf("Adios");
 				break;
 		}
 
