@@ -1,0 +1,17 @@
+/*
+ * Informe.h
+ * Author: Leandro Sobrino
+ */
+
+#ifndef INFORME_H_
+#define INFORME_H_
+
+#include "Cliente.h"
+#include "Aviso.h"
+#define OPTIONS_MAIN 9
+#define OPTIONS_REPORT 4
+
+int utn_showMainMenu(int* pOption, Aviso* list, int len, Cliente* listCliente, int lenCliente);
+int utn_showReportMenu(int* pOption);
+
+#endif /* INFORME_H_ */

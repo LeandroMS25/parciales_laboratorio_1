@@ -55,7 +55,7 @@ int cli_add(Cliente* list, int len)
 			buffer.isEmpty = 0;
 			buffer.id = generateNewId();
 			list[index] = buffer;
-			cli_show(list, index);
+			cli_showClient(list, index);
 			retorno = 0;
 		}
 	}
@@ -160,7 +160,7 @@ int cli_sortByName(Cliente* list, int len, int order)
 	int i;
 	Cliente aux;
 	int flagSwap = 1;
-	if(list != NULL && len > 0)
+	if(list != NULL && len > 0 && order >= 0 && order <= 1)
 	{
 		while(flagSwap)
 		{
@@ -239,7 +239,7 @@ int cli_findFree(Cliente* list, int len, int* pIndex)
  * \param int len, es el limite de array.
  * \return (-1) Error / (0) Ok
  */
-int cli_findOccupied(Cliente* list, int len)
+int cli_findBusy(Cliente* list, int len)
 {
 	int retorno = -1;
 	int i;
@@ -264,7 +264,7 @@ int cli_findOccupied(Cliente* list, int len)
  * \param int index, recibe un indice del array.
  * \return (-1) Error / (0) Ok
  */
-int cli_show(Cliente* list,int index)
+int cli_showClient(Cliente* list,int index)
 {
     int retorno = -1;
 

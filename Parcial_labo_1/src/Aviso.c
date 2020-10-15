@@ -11,17 +11,7 @@
 #include "Cliente.h"
 #include "validaciones.h"
 
-typedef struct
-{
-	int tipo;
-	int isEmpty;
-}Rubro;
-
 static int generateNewId(void);
-static void rub_init(Rubro* listRubro, int lenRubro);
-static void rub_generarListaDeRubro(Rubro* listRubro, int lenRubro, Aviso* list);
-static int rub_estaEnMiListaDeRubro(Rubro* listRubro, int lenRubro, int rubro);
-static int rub_printRubroConMasAvisos(Aviso* list, int len, Rubro* listRubro);
 /**
  * \brief Inicializa el array .
  * \param Aviso list, Es el puntero al array.
@@ -74,7 +64,7 @@ int avi_add(Aviso* list, int len, Cliente* listCliente, int lenCliente)
 			buffer.idAviso = generateNewId();
 			list[index] = buffer;
 			list[index].idCliente = listCliente[indexCliente].id;
-			avi_show(list, index);
+			avi_showAds(list, index);
 			retorno = 0;
 		}
 		else
@@ -119,7 +109,7 @@ int avi_findById(Aviso* list, int len, int id, int* pIndex)
  * \param int lenCliente, es el limite de array.
  * \return (-1) Error / (0) Ok
  */
-int avi_remove(Aviso* list, int len, Cliente* listCliente, int lenCliente)
+int avi_clientAndAdsRemove(Aviso* list, int len, Cliente* listCliente, int lenCliente)
 {
 	int retorno = -1;
 	int idClienteRemove;
@@ -172,7 +162,7 @@ int avi_sortByRubro(Aviso* list, int len, int order)
 	int i;
 	Aviso aux;
 	int flagSwap = 1;
-	if(list != NULL && len > 0)
+	if(list != NULL && len > 0 && order >= 0 && order <= 1)
 	{
 		while(flagSwap)
 		{
@@ -215,7 +205,7 @@ int avi_printByIdCliente(Aviso* list, int len, Cliente* listCliente, int lenClie
 		{
 			if(list[i].isEmpty == 0 && list[i].idCliente == id)
 			{
-				printf("ID del cliente: %d- ID del aviso: %d  - Texto: %s - Rubro: %d.\n",
+				printf("ID del cliente: %d - ID del aviso: %d - Texto: %s - Rubro: %d.\n",
 						list[i].idCliente, list[i].idAviso, list[i].text, list[i].rubro);
 			}
 		}
@@ -230,21 +220,26 @@ int avi_printByIdCliente(Aviso* list, int len, Cliente* listCliente, int lenClie
  * \param int index, recibe un indice del array.
  * \return (-1) Error / (0) Ok
  */
-int avi_show(Aviso* list,int index)
+int avi_showAds(Aviso* list,int index)
 {
 	int retorno = -1;
+	char estadoAviso[20];
 
-	if(list != NULL && index >= 0 )
+	if(list != NULL && index >= 0)
 	{
 		if(list[index].isEmpty==0)
 		{
-			printf("ID del aviso: %d  - Texto: %s - Rubro: %d.\n",
-					list[index].idAviso, list[index].text, list[index].rubro);
+			if(list[index].estado == ACTIVO)
+			{
+				snprintf(estadoAviso, 20, "ACTIVO");
+			}
+			else
+			{
+				snprintf(estadoAviso, 20, "PAUSADO");
+			}
+			printf("ID cliente: %-1d - ID aviso: %-1d  - Texto: %-50s - Rubro: %-1d - Estado: %s.\n",
+					list[index].idCliente, list[index].idAviso, list[index].text, list[index].rubro, estadoAviso);
 			retorno = 0;
-		}
-		else
-		{
-			printf("El aviso no existe.");
 		}
 	}
 	return retorno;
@@ -282,7 +277,7 @@ int avi_findFree(Aviso* list, int len, int* pIndex)
  * \param int* pIndex, puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
-int avi_findOccupied(Aviso* list, int len)
+int avi_findBusy(Aviso* list, int len)
 {
 	int retorno = -1;
 	int i;
@@ -317,35 +312,7 @@ int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state)
         {
             if(list[i].estado == state && list[i].isEmpty == 0)
             {
-            	avi_show(list, i);
-                retorno = 0;
-            }
-        }
-    }
-    return retorno;
-}
-/**
- * \brief Imprime la lista de clientes.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param Cliente* listCliente, Es el puntero al array.
- * \param int lenCliente, es el limite de array.
- * \return (-1) Error / (0) Ok
- */
-int avi_printClientes(Aviso* list, int len, Cliente* listCliente, int lenCliente)
-{
-    int retorno = -1;
-    int contador;
-
-    if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
-    {
-    	printf("ID     NOMBRE       APELLIDO        CUIT               AVISOS ACTIVOS\n");
-        for(int i=0;i<lenCliente;i++)
-        {
-            if(listCliente[i].isEmpty == 0 && avi_contarAvisosActivosPorId(list, len, listCliente[i].id, &contador) == 0)
-            {
-            	printf("%-6d %-12s %-15s %-18s %d \n"
-            			,listCliente[i].id ,listCliente[i].name ,listCliente[i].lastName ,listCliente[i].cuit ,contador);
+            	avi_showAds(list, i);
                 retorno = 0;
             }
         }
@@ -361,7 +328,7 @@ int avi_printClientes(Aviso* list, int len, Cliente* listCliente, int lenCliente
  * \param int state, indica el estado de los avisos.
  * \return (-1) Error / (0) Ok
  */
-int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, int state)
+int avi_changeStatus(Aviso* list, int len, Cliente* listCliente, int lenCliente, int state)
 {
 	int retorno = -1;
 	int idChange;
@@ -374,11 +341,11 @@ int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, 
 		avi_mostrarAvisosPausadosOActivos(list, len, !state);
 		if( ((state == 1 && utn_getNumberInt(&idChange, "Ingrese el ID del aviso que quiere reanudar: ", "ID invalido.\n", 1, INT_MAX, 2) == 0 &&
 			avi_findById(list, len, idChange, &indexChange) == 0 && list[indexChange].estado != state &&
-			cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 && cli_show(listCliente, indexCliente) == 0)
+			cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 && cli_showClient(listCliente, indexCliente) == 0)
 				||
 			(state == 0 && utn_getNumberInt(&idChange, "Ingrese el id del aviso que quiere pausar: ", "ID invalido.\n", 1, INT_MAX, 2) == 0 &&
-			avi_findById(list, len, idChange, &indexChange) == 0 && list[indexChange].estado != state
-			&& cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 && cli_show(listCliente, indexCliente) == 0)) &&
+			avi_findById(list, len, idChange, &indexChange) == 0 && list[indexChange].estado != state &&
+			cli_findById(listCliente, lenCliente, list[indexChange].idCliente, &indexCliente) == 0 && cli_showClient(listCliente, indexCliente) == 0)) &&
 			utn_getNumberInt(&respuesta, "¿Desea cambiar el estado del aviso? (1- Si/2- No): ", "Error.\n", SI, NO, 2) == 0)
 		{
 			if(respuesta == 1)
@@ -397,169 +364,6 @@ int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, 
 		}
 	}
 	return retorno;
-}
-/**
- * \brief Cuenta la cantidad de avisos pausados.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \return (-1) Error / (0) Ok
- */
-int avi_contarAvisosPausados(Aviso* list, int len)
-{
-    int retorno = -1;
-    int contadorPausados = 0;
-
-    if(list != NULL && len > 0)
-    {
-        for(int i=0;i<len;i++)
-        {
-            if(list[i].estado == 0 && list[i].isEmpty == 0)
-            {
-            	contadorPausados++;
-            }
-        }
-        printf("La cantidad de avisos pausados es: %d.\n",contadorPausados);
-        retorno = 0;
-    }
-    return retorno;
-}
-/**
- * \brief Cuenta la cantidad de avisos activos segun id.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int id, recibira el id del cliente.
- * \return (-1) Error / (0) Ok
- */
-int avi_contarAvisosActivosPorId(Aviso* list, int len, int id, int* pContador)
-{
-    int retorno = -1;
-    int contadorActivos = 0;
-
-    if(list != NULL && len > 0 && id > 0)
-    {
-        for(int i=0;i<len;i++)
-        {
-            if(list[i].estado == 1 && list[i].isEmpty == 0 && list[i].idCliente == id)
-            {
-            	contadorActivos++;
-            }
-        }
-        *pContador = contadorActivos;
-        retorno = 0;
-    }
-    return retorno;
-}
-/**
- * \brief Cuenta la cantidad de avisos segun id.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int id, recibira el id del cliente.
- * \return (-1) Error / (0) Ok
- */
-int avi_contarAvisosPorId(Aviso* list, int len, int id,int* pContador)
-{
-    int retorno = -1;
-    int contador = 0;
-
-    if(list != NULL && len > 0 && id > 0)
-    {
-        for(int i=0;i<len;i++)
-        {
-            if(list[i].isEmpty == 0 && list[i].idCliente == id)
-            {
-            	contador++;
-            }
-        }
-        *pContador = contador;
-        retorno = 0;
-    }
-    return retorno;
-}
-/**
- * \brief Cuenta la cantidad de avisos por rubro.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int id, recibira el id del cliente.
- * \return (-1) Error / (0) Ok
- */
-int avi_contarAvisosPorRubro(Aviso* list, int len, int rubro, int* pContador)
-{
-    int retorno = -1;
-    int contador = 0;
-
-    if(list != NULL && len > 0 && rubro > 0)
-    {
-        for(int i=0;i<len;i++)
-        {
-            if(list[i].isEmpty == 0 && list[i].rubro == rubro)
-            {
-            	contador++;
-            }
-        }
-        *pContador = contador;
-        retorno = 0;
-    }
-    return retorno;
-}
-/**
- * \brief Imprime el cliente que tenga mas avisos.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int state, indica el estado de los avisos.
- * \return (-1) Error / (0) Ok
- */
-int avi_printClientWithMoreAdvices(Aviso* list, int len, Cliente* listCliente, int lenCliente)
-{
-    int retorno = -1;
-    Cliente aux;
-    int contadorMaximo = 0;
-    int contadorAux;
-
-    if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
-    {
-        for(int i=0;i<lenCliente;i++)
-        {
-            if( listCliente[i].isEmpty == 0 &&
-				avi_contarAvisosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && contadorAux >= contadorMaximo)
-            {
-            	aux = listCliente[i];
-            	contadorMaximo = contadorAux;
-            }
-        }
-        printf("El cliente con mas avisos creados (%d) es %s %s - Cuit: %s.\n", contadorMaximo, aux.name, aux.lastName, aux.cuit);
-        retorno = 0;
-    }
-    return retorno;
-}
-/**
- * \brief Imprime el rubro que tenga mas avisos.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int state, indica el estado de los avisos.
- * \return (-1) Error / (0) Ok
- */
-static int rub_printRubroConMasAvisos(Aviso* list, int len, Rubro* listRubro)
-{
-    int retorno = -1;
-    Aviso aux;
-    int contadorMaximo = 0;
-    int contadorAux;
-
-    if(list != NULL && len > 0)
-    {
-        for(int i=0;i<len;i++)
-        {
-            if( list[i].isEmpty == 0 &&
-				avi_contarAvisosPorRubro(list, len, list[i].rubro, &contadorAux) == 0 && contadorAux >= contadorMaximo)
-            {
-            	aux = list[i];
-            	contadorMaximo = contadorAux;
-            }
-        }
-        printf("El rubro con mas avisos creados (%d) es el %d.\n", contadorMaximo, aux.rubro);
-        retorno = 0;
-    }
-    return retorno;
 }
 /**
  * \brief Realiza un alta forzada de un elemento.
@@ -600,92 +404,4 @@ static int generateNewId(void)
 
 	id++;
 	return id;
-}
-/**
- * \brief Inicializa el array .
- * \param Rubro* listRubro, Es el puntero al array.
- * \param int lenRubro, es el limite de array.
- */
-static void rub_init(Rubro* listRubro, int lenRubro)
-{
-	int i;
-
-	if (listRubro != NULL && lenRubro > 0)
-	{
-		for (i = 0; i < lenRubro; i++)
-		{
-			listRubro[i].isEmpty = 1;
-		}
-	}
-}
-/**
- * \brief Se chequea si el rubro comparado ya se encuentra en la lista de rubros.
- * \param Rubro* listRubro, Es el puntero al array.
- * \param int lenRubro, es el limite de array.
- * \param int rubro, indica el rubro que se va a comparar
- * \return (-1) Error / (0) Ok
- */
-static int rub_estaEnMiListaDeRubro(Rubro* listRubro, int lenRubro, int rubro)
-{
-	int i;
-	int retorno=0;
-
-	if (listRubro != NULL && lenRubro > 0 && rubro > 0)
-	{
-		for(i=0; i<lenRubro; i++)
-		{
-			if(listRubro[i].isEmpty == 0 && listRubro[i].tipo == rubro)
-			{
-				retorno=1;
-				break;
-			}
-		}
-	}
-	return retorno;
-}
-/**
- * \brief Genera la lista de rubros
- * \param Rubro* listRubro, Es el puntero al array.
- * \param int lenRubro, es el limite de array.
- * \param int rubro, indica el rubro que se va a comparar
- * \return (-1) Error / (0) Ok
- */
-static void rub_generarListaDeRubro(Rubro* listRubro, int lenRubro, Aviso* list)
-{
-	int i;
-	int indexRubro = 0;
-
-	if (listRubro != NULL && lenRubro > 0 && list != NULL)
-	{
-		rub_init(listRubro,lenRubro);
-		for(i=0;i<lenRubro; i++)
-		{
-			if(rub_estaEnMiListaDeRubro(listRubro, lenRubro, list[i].rubro) == 0)
-			{
-				listRubro[i].tipo = list[i].rubro;
-				listRubro[indexRubro].isEmpty = 0;
-				indexRubro++;
-			}
-		}
-	}
-}
-/**
- * \brief Genera la lista de rubros
- * \param Rubro* listRubro, Es el puntero al array.
- * \param int lenRubro, es el limite de array.
- * \param int rubro, indica el rubro que se va a comparar
- * \return (-1) Error / (0) Ok
- */
-int rub_generarInformeDeRubro(Aviso* list)
-{
-	int retorno = -1;
-	Rubro listRubro[QTY_AVI];
-
-	if (list != NULL)
-	{
-		rub_generarListaDeRubro(listRubro, QTY_AVI, list);
-		rub_printRubroConMasAvisos(list, QTY_AVI, listRubro);
-		retorno = 0;
-	}
-	return retorno;
 }

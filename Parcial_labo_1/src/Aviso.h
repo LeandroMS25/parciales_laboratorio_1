@@ -25,23 +25,15 @@ typedef struct
 
 int avi_init(Aviso* list, int len);
 int avi_add(Aviso* list, int len, Cliente* listCliente, int lenCliente);
-int avi_remove(Aviso* list, int len, Cliente* listCliente, int lenCliente);
-int avi_changeState(Aviso* list, int len, Cliente* listCliente, int lenCliente, int state);
-int avi_show(Aviso* list,int index);
+int avi_clientAndAdsRemove(Aviso* list, int len, Cliente* listCliente, int lenCliente);
+int avi_changeStatus(Aviso* list, int len, Cliente* listCliente, int lenCliente, int state);
+int avi_showAds(Aviso* list,int index);
 int avi_printByIdCliente(Aviso* list, int len, Cliente* listCliente, int lenCliente, int id);
 int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state);
 int avi_findById(Aviso* list, int len, int id, int* pIndex);
 int avi_findFree(Aviso* list, int len, int* pIndex);
-int avi_findOccupied(Aviso* list, int len);
+int avi_findBusy(Aviso* list, int len);
 int avi_sortByRubro(Aviso* list, int len, int order);
 int avi_altaForzada(Aviso* list, int len, int idCliente, int rubro, char* texto);
-
-int avi_printClientes(Aviso* list, int len, Cliente* listCliente, int lenCliente); // Punto 7
-int avi_contarAvisosActivosPorId(Aviso* list, int len, int id, int* pContador); // Punto 7
-int avi_contarAvisosPorId(Aviso* list, int len, int id, int* pContador); // Punto 8. a
-int avi_printClientWithMoreAdvices(Aviso* list, int len, Cliente* listCliente, int lenCliente); // Punto 8. a
-int avi_contarAvisosPausados(Aviso* list, int len); // Punto 8. b
-int avi_contarAvisosPorRubro(Aviso* list, int len, int rubro, int* pContador); // Punto 8. c
-int rub_generarInformeDeRubro(Aviso* list); // Punto 8. c
 
 #endif /* AVISO_H_ */

@@ -10,8 +10,8 @@
 #include <string.h>
 #include "Aviso.h"
 #include "Cliente.h"
+#include "Informe.h"
 #include "validaciones.h"
-#include "menu.h"
 
 int main(void)
 {
@@ -23,22 +23,19 @@ int main(void)
 
 	cli_init(listCliente, QTY_CLI);
 	avi_init(listAviso, QTY_AVI);
-
-	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-39107331-9");
+	// CLIENTES
+	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-15665651-9");
 	cli_altaForzada(listCliente, QTY_CLI,"Jorge","Suarez","20-31388898-4");
 	cli_altaForzada(listCliente, QTY_CLI,"Nicolas","Ramos","23-38165869-3");
 	cli_altaForzada(listCliente, QTY_CLI,"Laura","Ochoa","27-35098981-7");
 	cli_altaForzada(listCliente, QTY_CLI,"Florencia","Ayala","27-40189698-8");
-
-	avi_altaForzada(listAviso, QTY_AVI,2,7,"VendoMuebles");
-	avi_altaForzada(listAviso, QTY_AVI,1,1,"VendoAutos");
-	avi_altaForzada(listAviso, QTY_AVI,2,5,"VendoMotos");
-	avi_altaForzada(listAviso, QTY_AVI,3,4,"VendoAviones");
-	avi_altaForzada(listAviso, QTY_AVI,4,2,"VendoAviones");
-	avi_altaForzada(listAviso, QTY_AVI,4,1,"VendoAviones");
-	avi_altaForzada(listAviso, QTY_AVI,4,9,"VendoAviones");
-	avi_altaForzada(listAviso, QTY_AVI,4,5,"VendoAviones");
-	avi_altaForzada(listAviso, QTY_AVI,4,1,"VendoAviones");
+	// AVISOS
+	avi_altaForzada(listAviso, QTY_AVI, 2, 1,"Vendo palio modelo 2005. No arranca.");
+	avi_altaForzada(listAviso, QTY_AVI, 1, 7,"Vendo un Alexa que solo reconoce la voz en Aleman.");
+	avi_altaForzada(listAviso, QTY_AVI, 2, 1,"Regalo caniche. No lo aguanto mas.");
+	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
+	avi_altaForzada(listAviso, QTY_AVI, 4, 1,"Vendo guaymallen de fruta.");
+	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 
 	do
 	{
@@ -59,7 +56,7 @@ int main(void)
 				}
 				break;
 			case 3:
-				if(avi_remove(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
+				if(avi_clientAndAdsRemove(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
 				{
 					printf("El cliente y sus avisos se borraron correctamente.\n");
 				}
@@ -71,19 +68,19 @@ int main(void)
 				}
 				break;
 			case 5:
-				if(avi_changeState(listAviso, QTY_AVI, listCliente, QTY_CLI, PAUSADO) == 0)
+				if(avi_changeStatus(listAviso, QTY_AVI, listCliente, QTY_CLI, PAUSADO) == 0)
 				{
 					printf("El aviso se pauso correctamente.\n");
 				}
 				break;
 			case 6:
-				if(avi_changeState(listAviso, QTY_AVI, listCliente, QTY_CLI, ACTIVO) == 0)
+				if(avi_changeStatus(listAviso, QTY_AVI, listCliente, QTY_CLI, ACTIVO) == 0)
 				{
 					printf("El aviso se reanudo correctamente.\n");
 				}
 				break;
 			case 7:
-				if(avi_printClientes(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
+				if(cli_sortByName(listCliente, QTY_CLI, 1) == 0 && info_printClientes(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
 				{
 					printf("La lista se mostro correctamente.\n");
 				}
@@ -94,13 +91,13 @@ int main(void)
 					switch (optionReport)
 					{
 						case 1:
-							avi_printClientWithMoreAdvices(listAviso, QTY_AVI, listCliente, QTY_CLI);
+							info_printClientWithMoreAds(listAviso, QTY_AVI, listCliente, QTY_CLI);
 							break;
 						case 2:
-							avi_contarAvisosPausados(listAviso, QTY_AVI);
+							info_contarAvisosPausados(listAviso, QTY_AVI);
 							break;
 						case 3:
-							rub_generarInformeDeRubro(listAviso);
+							info_generarInformeDeRubro(listAviso);
 							break;
 						default:
 							break;
