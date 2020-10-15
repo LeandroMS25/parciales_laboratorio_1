@@ -23,7 +23,7 @@ int main(void)
 
 	cli_init(listCliente, QTY_CLI);
 	avi_init(listAviso, QTY_AVI);
-
+	// CLIENTES
 	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-15665651-9");
 	cli_altaForzada(listCliente, QTY_CLI,"Jorge","Suarez","20-31388898-4");
 	cli_altaForzada(listCliente, QTY_CLI,"Nicolas","Ramos","23-38165869-3");
@@ -35,7 +35,6 @@ int main(void)
 	avi_altaForzada(listAviso, QTY_AVI, 2, 1,"Regalo caniche. No lo aguanto mas.");
 	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 	avi_altaForzada(listAviso, QTY_AVI, 4, 1,"Vendo guaymallen de fruta.");
-	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 
 	do
@@ -100,25 +99,11 @@ int main(void)
 						case 3:
 							info_generarInformeDeRubro(listAviso);
 							break;
-						case 4:
-							if(info_printClientWithMoreActivesAds(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
-							{
-								printf("Se mostro correctamente.\n");
-							}
-							else
-							{
-								printf("No hay avisos activos.\n");
-							}
+						case 3:
+							info_client;
 							break;
-						case 5:
-							if(info_printClientWithMoreInactivesAds(listAviso, QTY_AVI, listCliente, QTY_CLI) == 0)
-							{
-								printf("Se mostro correctamente.\n");
-							}
-							else
-							{
-								printf("No hay avisos pausados.\n");
-							}
+						case 3:
+							info_generarInformeDeRubro(listAviso);
 							break;
 						default:
 							break;

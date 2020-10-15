@@ -422,8 +422,7 @@ int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listClient
         }
         if(contadorMaximo > 0)
         {
-        	printf("El cliente con mas avisos activos (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n",
-        			contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
+        	printf("El cliente con mas avisos activos (%d) es %s %s - Cuit: %s.\n\n", contadorMaximo, aux.name, aux.lastName, aux.cuit);
         	retorno = 0;
         }
     }
@@ -456,8 +455,7 @@ int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listClie
         }
         if(contadorMaximo > 0)
         {
-        	printf("El cliente con mas avisos pausados (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n"
-        			, contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
+        	printf("El cliente con mas avisos pausados (%d) es %s %s - Cuit: %s.\n\n", contadorMaximo, aux.name, aux.lastName, aux.cuit);
 			retorno = 0;
         }
     }

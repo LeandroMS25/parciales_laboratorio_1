@@ -77,9 +77,7 @@ int utn_showReportMenu(int* pOption)
 									"1- Cliente con mas avisos.\n"
 									"2- Cantidad de avisos pausados.\n"
 									"3- Rubro con mas avisos.\n"
-									"4- Cliente con mas avisos activos.\n"
-									"5- Clientes con mas avisos pausados.\n"
-									"6- Salir.\n\n"
+									"4- Salir.\n\n"
 									"Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS_REPORT, 2) == 0)
 		{
 			*pOption = option;
@@ -143,7 +141,7 @@ int info_contarAvisosActivosPorId(Aviso* list, int len, int id, int* pContador)
     return retorno;
 }
 /**
- * \brief Cuenta la cantidad de avisos pausados segun id.
+ * \brief Cuenta la cantidad de avisos activos segun id.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
  * \param int id, recibira el id del cliente.
@@ -152,18 +150,18 @@ int info_contarAvisosActivosPorId(Aviso* list, int len, int id, int* pContador)
 int info_contarAvisosPausadosPorId(Aviso* list, int len, int id, int* pContador)
 {
     int retorno = -1;
-    int contadorPausados = 0;
+    int contadorActivos = 0;
 
     if(list != NULL && len > 0 && id > 0 && pContador != NULL)
     {
         for(int i=0;i<len;i++)
         {
-            if(list[i].estado == 0 && list[i].isEmpty == 0 && list[i].idCliente == id)
+            if(list[i].estado == 1 && list[i].isEmpty == 0 && list[i].idCliente == id)
             {
-            	contadorPausados++;
+            	contadorActivos++;
             }
         }
-        *pContador = contadorPausados;
+        *pContador = contadorActivos;
         retorno = 0;
     }
     return retorno;
@@ -394,72 +392,4 @@ int info_generarInformeDeRubro(Aviso* list)
 		retorno = 0;
 	}
 	return retorno;
-}
-/**
- * \brief Imprime el cliente que tenga mas avisos activos.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int state, indica el estado de los avisos.
- * \return (-1) Error / (0) Ok
- */
-int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente)
-{
-    int retorno = -1;
-    Cliente aux;
-    int contadorMaximo;
-    int contadorAux;
-
-    if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
-    {
-        for(int i=0;i<lenCliente;i++)
-        {
-            if( listCliente[i].isEmpty == 0 &&
-				info_contarAvisosActivosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && (i == 0 || contadorAux >= contadorMaximo ))
-            {
-            	aux = listCliente[i];
-            	contadorMaximo = contadorAux;
-            }
-        }
-        if(contadorMaximo > 0)
-        {
-        	printf("El cliente con mas avisos activos (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n",
-        			contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
-        	retorno = 0;
-        }
-    }
-    return retorno;
-}
-/**
- * \brief Imprime el cliente que tenga mas avisos pausados.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int state, indica el estado de los avisos.
- * \return (-1) Error / (0) Ok
- */
-int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente)
-{
-    int retorno = -1;
-    Cliente aux;
-    int contadorMaximo;
-    int contadorAux;
-
-    if(list != NULL && len > 0 && listCliente != NULL && lenCliente  > 0)
-    {
-        for(int i=0;i<lenCliente;i++)
-        {
-            if( listCliente[i].isEmpty == 0 &&
-				info_contarAvisosPausadosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && (i == 0 || contadorAux >= contadorMaximo ))
-            {
-            	aux = listCliente[i];
-            	contadorMaximo = contadorAux;
-            }
-        }
-        if(contadorMaximo > 0)
-        {
-        	printf("El cliente con mas avisos pausados (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n"
-        			, contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
-			retorno = 0;
-        }
-    }
-    return retorno;
 }

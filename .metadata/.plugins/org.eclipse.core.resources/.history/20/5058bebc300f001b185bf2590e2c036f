@@ -22,7 +22,5 @@ int info_printClientWithMoreAds(Aviso* list, int len, Cliente* listCliente, int 
 int info_contarAvisosPausados(Aviso* list, int len); // Punto 8. b
 int info_contarAvisosPorRubro(Aviso* list, int len, int rubro, int* pContador); // Punto 8. c
 int info_generarInformeDeRubro(Aviso* list); // Punto 8. c
-int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente);
-int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente);
 
 #endif /* INFORME_H_ */

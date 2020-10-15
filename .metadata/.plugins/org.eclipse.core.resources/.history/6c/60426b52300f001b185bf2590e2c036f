@@ -9,7 +9,7 @@
 #include "Cliente.h"
 #include "Aviso.h"
 #define OPTIONS_MAIN 9
-#define OPTIONS_REPORT 6
+#define OPTIONS_REPORT 4
 
 int utn_showMainMenu(int* pOption, Aviso* list, int len, Cliente* listCliente, int lenCliente);
 int utn_showReportMenu(int* pOption);
@@ -22,7 +22,5 @@ int info_printClientWithMoreAds(Aviso* list, int len, Cliente* listCliente, int 
 int info_contarAvisosPausados(Aviso* list, int len); // Punto 8. b
 int info_contarAvisosPorRubro(Aviso* list, int len, int rubro, int* pContador); // Punto 8. c
 int info_generarInformeDeRubro(Aviso* list); // Punto 8. c
-int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente);
-int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente);
 
 #endif /* INFORME_H_ */

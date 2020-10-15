@@ -23,7 +23,7 @@ int main(void)
 
 	cli_init(listCliente, QTY_CLI);
 	avi_init(listAviso, QTY_AVI);
-
+	// CLIENTES
 	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-15665651-9");
 	cli_altaForzada(listCliente, QTY_CLI,"Jorge","Suarez","20-31388898-4");
 	cli_altaForzada(listCliente, QTY_CLI,"Nicolas","Ramos","23-38165869-3");
