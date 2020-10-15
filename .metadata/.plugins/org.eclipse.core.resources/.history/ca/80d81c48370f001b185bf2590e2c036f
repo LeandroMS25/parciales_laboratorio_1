@@ -24,7 +24,7 @@ int main(void)
 	cli_init(listCliente, QTY_CLI);
 	avi_init(listAviso, QTY_AVI);
 
-
+	/*
 	// CLIENTES
 	cli_altaForzada(listCliente, QTY_CLI,"Leandro","Sobrino","20-15665651-9");
 	cli_altaForzada(listCliente, QTY_CLI,"Jorge","Suarez","20-31388898-4");
@@ -39,7 +39,7 @@ int main(void)
 	avi_altaForzada(listAviso, QTY_AVI, 4, 1,"Vendo guaymallen de fruta.");
 	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
-
+	*/
 
 	do
 	{

@@ -409,7 +409,7 @@ int avi_mostrarAvisosPausadosOActivosPorId(Aviso* list, int len, int state, int 
     {
         for(int i=0;i<len;i++)
         {
-            if(list[i].estado == state && list[i].isEmpty == 0 && list[i].idCliente == id)
+            if(list[i].estado == state && list[i].isEmpty == 0 && list[i].idAviso == id)
             {
             	avi_showAds(list, i);
                 retorno = 0;

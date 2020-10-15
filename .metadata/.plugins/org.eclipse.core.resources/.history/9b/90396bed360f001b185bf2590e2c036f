@@ -395,30 +395,6 @@ int avi_altaForzada(Aviso* list, int len, int idCliente, int rubro, char* texto)
     return retorno;
 }
 /**
- * \brief Imprime los avisos activos o pausados.
- * \param Aviso* list, Es el puntero al array
- * \param int len, es el limite de array
- * \param int state, indica el estado de los avisos.
- * \return (-1) Error / (0) Ok
- */
-int avi_mostrarAvisosPausadosOActivosPorId(Aviso* list, int len, int state, int id)
-{
-    int retorno = -1;
-
-    if(list != NULL && len > 0 && (state >= 0 || state <= 1))
-    {
-        for(int i=0;i<len;i++)
-        {
-            if(list[i].estado == state && list[i].isEmpty == 0 && list[i].idCliente == id)
-            {
-            	avi_showAds(list, i);
-                retorno = 0;
-            }
-        }
-    }
-    return retorno;
-}
-/**
  * \brief Incrementa el id y lo retorna.
  * \return Retorna el id
  */

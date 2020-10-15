@@ -30,7 +30,7 @@ int avi_changeStatus(Aviso* list, int len, Cliente* listCliente, int lenCliente,
 int avi_showAds(Aviso* list,int index);
 int avi_printByIdCliente(Aviso* list, int len, Cliente* listCliente, int lenCliente, int id);
 int avi_mostrarAvisosPausadosOActivos(Aviso* list, int len, int state);
-int avi_mostrarAvisosPausadosOActivosPorId(Aviso* list, int len, int state, int id);
+int avi_mostrarAvisosPausadosOActivosPorId(Aviso* list, int len, int state, id);;
 int avi_findById(Aviso* list, int len, int id, int* pIndex);
 int avi_findFree(Aviso* list, int len, int* pIndex);
 int avi_findBusy(Aviso* list, int len);

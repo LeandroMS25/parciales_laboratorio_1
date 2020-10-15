@@ -198,8 +198,7 @@ int info_contarAvisosPorId(Aviso* list, int len, int id,int* pContador)
  * \brief Imprime el cliente que tenga mas avisos.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
- * \param Cliente* listCliente, Es el puntero al array.
- * \param int lenCliente, es el limite de array.
+ * \param int state, indica el estado de los avisos.
  * \return (-1) Error / (0) Ok
  */
 int info_printClientWithMoreAds(Aviso* list, int len, Cliente* listCliente, int lenCliente)
@@ -400,8 +399,7 @@ int info_generarInformeDeRubro(Aviso* list)
  * \brief Imprime el cliente que tenga mas avisos activos.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
- * \param Cliente* listCliente, Es el puntero al array.
- * \param int lenCliente, es el limite de array.
+ * \param int state, indica el estado de los avisos.
  * \return (-1) Error / (0) Ok
  */
 int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente)
@@ -426,7 +424,6 @@ int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listClient
         {
         	printf("El cliente con mas avisos activos (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n",
         			contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
-        	avi_mostrarAvisosPausadosOActivosPorId(list, len, ACTIVO, aux.id);
         	retorno = 0;
         }
     }
@@ -436,8 +433,7 @@ int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listClient
  * \brief Imprime el cliente que tenga mas avisos pausados.
  * \param Aviso* list, Es el puntero al array
  * \param int len, es el limite de array
- * \param Cliente* listCliente, Es el puntero al array.
- * \param int lenCliente, es el limite de array.
+ * \param int state, indica el estado de los avisos.
  * \return (-1) Error / (0) Ok
  */
 int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listCliente, int lenCliente)
@@ -463,7 +459,6 @@ int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listClie
         	printf("El cliente con mas avisos pausados (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n"
         			, contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
 			retorno = 0;
-			avi_mostrarAvisosPausadosOActivosPorId(list, len, PAUSADO, aux.id);
         }
     }
     return retorno;
