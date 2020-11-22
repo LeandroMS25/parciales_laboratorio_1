@@ -14,6 +14,7 @@ int controller_modifyVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente);
 int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayListCliente, LinkedList* pArrayListVentas, int estado);
 int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente);
+int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente, int limite);
 int controller_clienteSaveAsText(char* path , LinkedList* pArrayListCliente);
 int controller_ventasSaveAsText(char* path , LinkedList* pArrayListVentas);
 int controller_imprimirCliente(LinkedList* pArrayListCliente);

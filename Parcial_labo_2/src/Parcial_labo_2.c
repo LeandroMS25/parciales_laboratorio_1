@@ -65,24 +65,26 @@ int main()
 					}
 					break;
 				case 7:
-					if(!(controller_imprimirVentaConMasAfiches(listaVentas, listaClientes)))
+					if( !(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MAXIMO)) &&
+						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MINIMO)) &&
+						!(controller_imprimirVentaConMasAfiches(listaVentas, listaClientes)))
 					{
 						printf("Las estadisticas se generaron correctamente.\n");
 					}
 					break;
-				case 10:
+				case 8:
 					if(!(controller_imprimirCliente(listaClientes)))
 					{
-						printf("Se imprimio esta mierda.\n");
+						printf("Se imprimio la lista.\n");
 					}
 					break;
-				case 11:
+				case 9:
 					if(!(controller_imprimirVentas(listaVentas)))
 					{
-						printf("Se imprimio esta mierda.\n");
+						printf("Se imprimio la lista.\n");
 					}
 					break;
-				case 12:
+				case 10:
 					printf("Adios");
 					break;
 			}

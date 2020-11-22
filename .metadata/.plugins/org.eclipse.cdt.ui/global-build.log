@@ -465,3 +465,217 @@ collect2.exe: error: ld returned 1 exit status
 11:14:13 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
 Info: Internal Builder is used for build
 gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+15:36:39 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c:376:5: error: redefinition of 'controller_imprimirVentaConMasAfiches'
+  376 | int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+..\src\Controller.c:349:5: note: previous definition of 'controller_imprimirVentaConMasAfiches' was here
+  349 | int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+15:37:19 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+Info: Nothing to build for Parcial_labo_2
+15:37:40 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+15:37:41 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+15:55:16 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_imprimirClienteConMasOrMenosAfiches':
+..\src\Controller.c:381:53: warning: unused variable 'idMinimo' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                                     ^~~~~~~~
+..\src\Controller.c:381:35: warning: unused variable 'auxId' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                   ^~~~~
+..\src\Controller.c:381:27: warning: unused variable 'minimo' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                           ^~~~~~
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+15:56:57 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Ventas.o" "..\\src\\Ventas.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_imprimirClienteConMasOrMenosAfiches':
+..\src\Controller.c:381:53: warning: unused variable 'idMinimo' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                                     ^~~~~~~~
+..\src\Controller.c:381:35: warning: unused variable 'auxId' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                   ^~~~~
+..\src\Controller.c:381:27: warning: unused variable 'minimo' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                           ^~~~~~
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+15:57:01 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+16:00:17 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_imprimirClienteConMasOrMenosAfiches':
+..\src\Controller.c:381:53: warning: unused variable 'idMinimo' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                                     ^~~~~~~~
+..\src\Controller.c:381:35: warning: unused variable 'auxId' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                   ^~~~~
+..\src\Controller.c:381:27: warning: unused variable 'minimo' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                           ^~~~~~
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+16:00:18 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+16:09:06 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_imprimirClienteConMasOrMenosAfiches':
+..\src\Controller.c:381:35: warning: unused variable 'auxId' [-Wunused-variable]
+  381 |  int cantAfiches, maximo, minimo, auxId, idCliente, idMinimo, idMaximo;
+      |                                   ^~~~~
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+16:09:09 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+Info: Nothing to build for Parcial_labo_2
+16:10:58 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+16:10:59 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+16:48:05 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Cliente.o" "..\\src\\Cliente.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Ventas.o" "..\\src\\Ventas.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\menu.o" "..\\src\\menu.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+..\src\Parcial_labo_2.c: In function 'main':
+..\src\Parcial_labo_2.c:68:12: error: too few arguments to function 'controller_imprimirClienteConMasOrMenosAfiches'
+   68 |      if( !(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes)) &&
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ..\src\Parcial_labo_2.c:10:
+..\src\Controller.h:17:5: note: declared here
+   17 | int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente, int limite);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+16:50:18 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_imprimirClienteConMasOrMenosAfiches':
+..\src\Controller.c:388:24: warning: passing argument 1 of 'ventas_getIdCliente' from incompatible pointer type [-Wincompatible-pointer-types]
+  388 |    ventas_getIdCliente(auxCliente, &idCliente);
+      |                        ^~~~~~~~~~
+      |                        |
+      |                        Cliente * {aka struct <anonymous> *}
+In file included from ..\src\Controller.c:6:
+..\src\Ventas.h:39:33: note: expected 'Ventas *' {aka 'struct <anonymous> *'} but argument is of type 'Cliente *' {aka 'struct <anonymous> *'}
+   39 | int ventas_getIdCliente(Ventas* this, int* idCliente);
+      |                         ~~~~~~~~^~~~
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\parser.o" "..\\src\\parser.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+16:51:22 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+16:51:24 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+16:53:41 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+16:53:42 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+17:02:15 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+17:02:31 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+17:02:33 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+17:03:44 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+17:03:46 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+17:04:44 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+17:04:45 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+17:10:29 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+17:10:31 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+Info: Nothing to build for Parcial_labo_2
+Info: Nothing to build for Parcial_labo_2
+17:25:51 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\menu.o" "..\\src\\menu.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+17:25:53 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+17:26:10 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\menu.o" "..\\src\\menu.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Parcial_labo_2.o" "..\\src\\Parcial_labo_2.c" 
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file Parcial_labo_2.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+17:26:11 **** Incremental Build of configuration Debug for project Parcial_labo_2 ****
+Info: Internal Builder is used for build
+gcc -o Parcial_labo_2.exe "src\\Cliente.o" "src\\Controller.o" "src\\LinkedList.o" "src\\Parcial_labo_2.o" "src\\Ventas.o" "src\\menu.o" "src\\parser.o" "src\\validaciones.o" 

@@ -8,8 +8,6 @@
 #ifndef cliente_H_
 #define cliente_H_
 #define SIZE_STR 128
-#define COBRADA 1
-#define SIN_COBRAR 0
 #include "LinkedList.h"
 
 typedef struct

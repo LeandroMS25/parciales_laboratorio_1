@@ -8,6 +8,10 @@
 #ifndef ventas_H_
 #define ventas_H_
 #define SIZE_STR 128
+#define COBRADA 1
+#define SIN_COBRAR 0
+#define MAXIMO 1
+#define MINIMO 0
 #include "LinkedList.h"
 
 typedef struct

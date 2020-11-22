@@ -191,7 +191,7 @@ int controller_addVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListClie
 	int auxZona;
 	int idCliente;
 
-	if(pArrayListVentas != NULL && auxVenta != NULL)
+	if(pArrayListCliente != NULL && pArrayListVentas != NULL && auxVenta != NULL)
 	{
 		controller_imprimirCliente(pArrayListCliente);
 		if( utn_getNumberInt(&idCliente, "Seleccione el ID del cliente: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
@@ -222,7 +222,7 @@ int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 	Ventas* auxVenta;
 	int auxId, indexModify, option, idCliente;
 
-	if(pArrayListVentas != NULL)
+	if(pArrayListCliente != NULL && pArrayListVentas != NULL)
 	{
 		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que desea cobrar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
@@ -256,7 +256,7 @@ int controller_modifyVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 	int auxId, option, auxZona, indexModify, auxCantAfiches, idCliente;
 	char auxNombreArchivo[SIZE_STR];
 
-	if(pArrayListVentas != NULL)
+	if(pArrayListCliente != NULL && pArrayListVentas != NULL)
 	{
 		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que quiere modificar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
@@ -312,7 +312,8 @@ int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayLis
 	auxArg.estado = estado;
 	FILE* pFile;
 
-	if(path != NULL && pArrayListCliente != NULL && len > 0)
+	if(path != NULL && pArrayListCliente != NULL && pArrayListVentas != NULL && len > 0 &&
+		(estado == COBRADA || estado == SIN_COBRAR))
 	{
 		pFile = fopen(path,"w");
 		if(pFile != NULL)
@@ -352,7 +353,7 @@ int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedLi
 	Ventas* auxVenta;
 	int cantAfiches, cantMaxima, auxId, idCliente;
 
-	if(pArrayListVentas != NULL)
+	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
 	{
 		for (int i = 0; i < ll_len(pArrayListVentas); i++)
 		{
@@ -365,8 +366,46 @@ int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedLi
 				ventas_getIdCliente(auxVenta, &idCliente);
 			}
 		}
-		printf("3- El ID de la venta con mas afiches es el: %d.\n",auxId);
+		printf("\n3- El ID de la venta con mas afiches es el %d con %d afiches.\n",auxId,cantMaxima);
+		printf("El/La cliente que hizo la compra fue: ");
 		cliente_findIdAndPrint(pArrayListCliente, idCliente);
+		retorno = 0;
+	}
+	return retorno;
+}
+
+int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente, int limite)
+{
+	int retorno = -1;
+	Cliente* auxCliente;
+	int cantAfiches, cantLimite, idLimite, idCliente;
+
+	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
+	{
+		for (int i = 0; i < ll_len(pArrayListCliente); i++)
+		{
+			auxCliente = ll_get(pArrayListCliente, i);
+			cliente_getIdCliente(auxCliente, &idCliente);
+			cantAfiches = ll_reduceInt(pArrayListVentas, ventas_calcularCantidadAfiches, &idCliente);
+			if( cantAfiches != 0 &&
+				((limite == MAXIMO && (i == 0 || cantAfiches > cantLimite)) ||
+				(limite == MINIMO && (i == 0 || cantAfiches < cantLimite))))
+			{
+				cantLimite = cantAfiches;
+				idLimite = idCliente;
+			}
+		}
+		if(limite == MAXIMO)
+		{
+			printf("\n1- El/La cliente al que se le vendio mas afiches fue: ");
+			cliente_findIdAndPrint(pArrayListCliente, idLimite);
+		}
+		else
+		{
+			printf("\n2- El/La cliente al que se le vendio menos afiches fue: ");
+			cliente_findIdAndPrint(pArrayListCliente, idLimite);
+		}
+		printf(" con %d afiches.",cantLimite);
 		retorno = 0;
 	}
 	return retorno;

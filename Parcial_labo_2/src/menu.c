@@ -29,9 +29,9 @@ int utn_showMenu(int* pOption, LinkedList* pArrayListCliente)
 									 "5- Generar informe de cobros.\n"
 									 "6- Generar informe de deudas.\n"
 									 "7- Mostrar estadisticas.\n"
-									 "10- Mostrar lista de clientes.\n"
-									 "11- Mostrar lista de ventas.\n"
-									 "12- Salir.\n\n"
+									 "8- Mostrar lista de clientes.\n"
+									 "9- Mostrar lista de ventas.\n"
+									 "10- Salir.\n\n"
 									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS, 2) == 0)
 		{
 		/*
