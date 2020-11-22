@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="info_"/>
+		<item key="selection" value="ventas_"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Ventas_"/>
+			<item value="Cliente_"/>
 			<item value="rub_"/>
 			<item value="avi_"/>
 			<item value="avi_printByIdCliente"/>
@@ -21,10 +23,10 @@
 			<item value="con_"/>
 			<item value="QTY_CON"/>
 			<item value="QTY_SCR"/>
-			<item value="Contratacion"/>
-			<item value="Screen"/>
 		</list>
 		<list key="replacehistory">
+			<item value="ventas_"/>
+			<item value="cliente_"/>
 			<item value="info_"/>
 			<item value="avi"/>
 			<item value="cli"/>

@@ -332,7 +332,7 @@ static void info_generarListaDeRubro(Rubro* listRubro, int lenRubro, Aviso* list
 	int i;
 	int indexRubro = 0;
 
-	if (listRubro != NULL && lenRubro > 0 && list != NULL)
+	if (listRubro != NULL && lenRubro > 0 && list != NULL && len )
 	{
 		info_init(listRubro,lenRubro);
 		for(i=0;i<len; i++)
@@ -416,19 +416,19 @@ int info_printClientWithMoreActivesAds(Aviso* list, int len, Cliente* listClient
         for(int i=0;i<lenCliente;i++)
         {
             if( listCliente[i].isEmpty == 0 &&
-				info_contarAvisosActivosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && (i == 0 || contadorAux >= contadorMaximo ))
+				info_contarAvisosActivosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && (i == 0 || contadorAux > contadorMaximo ))
             {
             	aux = listCliente[i];
             	contadorMaximo = contadorAux;
             }
         }
         if(contadorMaximo > 0)
-        {
-        	printf("El cliente con mas avisos activos (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n",
-        			contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
-        	avi_mostrarAvisosPausadosOActivosPorId(list, len, ACTIVO, aux.id);
-        	retorno = 0;
-        }
+		{
+			printf("El cliente con mas avisos activos (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n",
+					contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
+			avi_mostrarAvisosPausadosOActivosPorId(list, len, ACTIVO, aux.id);
+			retorno = 0;
+		}
     }
     return retorno;
 }
@@ -452,19 +452,19 @@ int info_printClientWithMoreInactivesAds(Aviso* list, int len, Cliente* listClie
         for(int i=0;i<lenCliente;i++)
         {
             if( listCliente[i].isEmpty == 0 &&
-				info_contarAvisosPausadosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && (i == 0 || contadorAux >= contadorMaximo ))
+				info_contarAvisosPausadosPorId(list, len, listCliente[i].id, &contadorAux) == 0 && (i == 0 || contadorAux > contadorMaximo ))
             {
             	aux = listCliente[i];
             	contadorMaximo = contadorAux;
             }
         }
         if(contadorMaximo > 0)
-        {
-        	printf("El cliente con mas avisos pausados (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n"
-        			, contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
-			retorno = 0;
+		{
+			printf("El cliente con mas avisos pausados (%d) es %s %s - Cuit: %s - ID cliente: %d.\n\n"
+					, contadorMaximo, aux.name, aux.lastName, aux.cuit, aux.id);
 			avi_mostrarAvisosPausadosOActivosPorId(list, len, PAUSADO, aux.id);
-        }
+			retorno = 0;
+		}
     }
     return retorno;
 }

@@ -40,7 +40,6 @@ int main(void)
 	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 	avi_altaForzada(listAviso, QTY_AVI, 3, 4,"Vendo guaymallen de fruta.");
 
-
 	do
 	{
 		optionMain = 0;
