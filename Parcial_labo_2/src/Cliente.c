@@ -9,12 +9,22 @@
 #include <string.h>
 #include "validaciones.h"
 #include "Cliente.h"
-
+/**
+ * \brief Crea un nuevo cliente.
+ * \return devuelve un puntero al espacio de memoria del cliente.
+ */
 Cliente* cliente_new(void)
 {
 	return (Cliente*)malloc(sizeof(Cliente));
 }
-
+/**
+ * \brief Crea un nuevo envío.
+ * \param char* idCliente, id del cliente.
+ * \param char* nombre, recibe el nombre del cliente.
+ * \param char* apellido, recibe el apellido del cliente.
+ * \param char* cuit, recibe cuit del cliente.
+ * \return devuelve un puntero al espacio de memoria del cliente.
+ */
 Cliente* cliente_newParam(char* idCliente, char* nombre, char* apellido, char* cuit)
 {
 	Cliente* this = cliente_new();
@@ -28,7 +38,10 @@ Cliente* cliente_newParam(char* idCliente, char* nombre, char* apellido, char* c
 	}
 	return this;
 }
-
+/*
+ * \brief Borra un cliente (libera el espacio de memoria).
+ * \param Cliente* this, Es el puntero al espacio de memoria del cliente.
+ */
 void cliente_delete(Cliente* this)
 {
 	if (this != NULL)
@@ -36,7 +49,12 @@ void cliente_delete(Cliente* this)
 		free(this);
 	}
 }
-
+/**
+ * \brief Lee el id del cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param int* idCliente, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_getIdCliente(Cliente* this, int* idCliente)
 {
 	int retorno = -1;
@@ -47,6 +65,12 @@ int cliente_getIdCliente(Cliente* this, int* idCliente)
 	}
 	return retorno;
 }
+/**
+ * \brief Escribe el id del cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param int idCliente, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 
 int cliente_setIdCliente(Cliente* this, int idCliente)
 {
@@ -58,7 +82,12 @@ int cliente_setIdCliente(Cliente* this, int idCliente)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee un nombre de cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param char* nombre, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_getNombre(Cliente* this, char* nombre)
 {
 	int retorno = -1;
@@ -69,7 +98,12 @@ int cliente_getNombre(Cliente* this, char* nombre)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe un nombre de cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param char* nombre, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_setNombre(Cliente* this, char* nombre)
 {
 	int retorno = -1;
@@ -80,7 +114,12 @@ int cliente_setNombre(Cliente* this, char* nombre)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee un apellido de cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param char* apellido, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_getApellido(Cliente* this, char* apellido)
 {
 	int retorno = -1;
@@ -91,7 +130,12 @@ int cliente_getApellido(Cliente* this, char* apellido)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe un apellido de cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param char* apellido, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_setApellido(Cliente* this, char* apellido)
 {
 	int retorno = -1;
@@ -102,7 +146,12 @@ int cliente_setApellido(Cliente* this, char* apellido)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee un cuit de cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param char* cuit, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_getCuit(Cliente* this, char* cuit)
 {
 	int retorno = -1;
@@ -113,7 +162,12 @@ int cliente_getCuit(Cliente* this, char* cuit)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe un cuit de cliente.
+ * \param Cliente* this, Es el puntero al array.
+ * \param char* cuit, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_setCuit(Cliente* this, char* cuit)
 {
 	int retorno = -1;
@@ -124,7 +178,15 @@ int cliente_setCuit(Cliente* this, char* cuit)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe los datos recibidos.
+ * \param Cliente* this, Es el puntero al array.
+ * \param int idCliente, recibe el id.
+ * \param char* nombre, recibe un nombre.
+ * \param char* apellido, recibe la zona de destino.
+ * \param char* cuit, recibe un cuit.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_allSets(Cliente* this, int idCliente, char* nombre, char* apellido, char* cuit)
 {
 	int retorno = -1;
@@ -139,7 +201,15 @@ int cliente_allSets(Cliente* this, int idCliente, char* nombre, char* apellido, 
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee los datos.
+ * \param Cliente* this, Es el puntero al array.
+ * \param int* idCliente, Puntero al espacio de memoria.
+ * \param char* nombre, Puntero al espacio de memoria.
+ * \param char* apellido, Puntero al espacio de memoria.
+ * \param char* cuit, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int cliente_allGets(Cliente* this, int* idCliente, char* nombre, char* apellido, char* cuit)
 {
 	int retorno = -1;
@@ -202,8 +272,8 @@ int cliente_findMaxId(LinkedList* pArrayListCliente, int* pMaxId)
 	return retorno;
 }
 /**
- * \brief Recibe un id y chequea si se encuentra en la lista.
- * \param LinkedList* pArrayListEmployee, Es el puntero al array.
+ * \brief Recibe un cuit y chequea si ya existe un cliente con el mismo cuit en la lista.
+ * \param LinkedList* pArrayListCliente, Es el puntero al array.
  * \param char* cuit, cuit recibido para comparar.
  * \return (-1) Error / (0) Ok
  */
@@ -230,12 +300,12 @@ int cliente_findCuitRepetido(LinkedList* pArrayListCliente, char* cuit)
 	return retorno;
 }
 /**
- * \brief Recibe un id y chequea si se encuentra en la lista.
+ * \brief Recibe un id y chequea si el cliente se encuentra en la lista.
  * \param LinkedList* pArrayListCliente, Es el puntero al array.
  * \param int id, id recibido para comparar.
  * \return (-1) Error / (0) Ok
  */
-int cliente_findId(LinkedList* pArrayListCliente, int id)
+int cliente_findById(LinkedList* pArrayListCliente, int id)
 {
 	int retorno = 0;
 	Cliente* auxCliente;
@@ -258,7 +328,7 @@ int cliente_findId(LinkedList* pArrayListCliente, int id)
 	return retorno;
 }
 /**
- * \brief Recibe un id y chequea si se encuentra en la lista.
+ * \brief Recibe un id, chequea si se encuentra en la lista e imprime el cliente.
  * \param LinkedList* pArrayListCliente, Es el puntero al array.
  * \param int id, id recibido para comparar.
  * \return (-1) Error / (0) Ok
@@ -288,4 +358,3 @@ int cliente_findIdAndPrint(LinkedList* pArrayListCliente, int id)
 	}
 	return retorno;
 }
-

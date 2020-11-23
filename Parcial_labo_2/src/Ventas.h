@@ -47,5 +47,6 @@ int ventas_findMaxId(LinkedList* pArrayListVentas, int* pMaxId);
 int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int estado, int* pIndex);
 int ventas_calcularVentasCobradasOrAdeudadas(void* pElement, void* arg);
 int ventas_calcularCantidadAfiches(void* pElement, void* id);
+int ventas_filterByStatus(void* pElement, void* estado);
 
 #endif /* ventas_H_ */

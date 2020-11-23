@@ -19,13 +19,14 @@ int main()
     int option;
     LinkedList* listaClientes = ll_newLinkedList();
     LinkedList* listaVentas = ll_newLinkedList();
+    LinkedList* listaVentasFiltrada = ll_newLinkedList();
     if( !(controller_clienteLoadFromText("clientes.csv", listaClientes)) &&
 		!(controller_ventasLoadFromText("ventas.csv", listaVentas)))
     {
     	do
 		{
 			option = 0;
-			utn_showMenu(&option, listaClientes);
+			utn_showMenu(&option);
 			switch(option)
 			{
 				case 1:
@@ -53,21 +54,23 @@ int main()
 					}
 					break;
 				case 5:
-					if(!(controller_generarInformeDeCobrosOrDeudas("cobradas.csv", listaClientes, listaVentas, COBRADA)))
+					if(!(controller_generarInformeDeCobrosOrDeudas("cobradas2.csv", listaClientes, listaVentas, COBRADA)))
 					{
 						printf("El archivo se genero correctamente.\n");
 					}
 					break;
 				case 6:
-					if(!(controller_generarInformeDeCobrosOrDeudas("a_cobrar.csv", listaClientes, listaVentas, SIN_COBRAR)))
+					if(!(controller_generarInformeDeCobrosOrDeudas("a_cobrar2.csv", listaClientes, listaVentas, SIN_COBRAR)))
 					{
 						printf("El archivo se genero correctamente.\n");
 					}
 					break;
 				case 7:
-					if( !(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MAXIMO)) &&
-						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MINIMO)) &&
-						!(controller_imprimirVentaConMasAfiches(listaVentas, listaClientes)))
+					listaVentasFiltrada = controller_filtrarVentasPorEstado(listaVentas, COBRADA);
+					if( /*!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MAXIMO)) &&
+						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MINIMO))*/
+						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentasFiltrada, listaClientes)) &&
+						!(controller_imprimirVentaConMasAfiches(listaVentasFiltrada, listaClientes)))
 					{
 						printf("Las estadisticas se generaron correctamente.\n");
 					}
@@ -79,7 +82,7 @@ int main()
 					}
 					break;
 				case 9:
-					if(!(controller_imprimirVentas(listaVentas)))
+					if(!(controller_imprimirVentas(listaVentasFiltrada)))
 					{
 						printf("Se imprimio la lista.\n");
 					}

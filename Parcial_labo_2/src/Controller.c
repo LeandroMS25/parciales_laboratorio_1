@@ -64,7 +64,7 @@ int controller_ventasLoadFromText(char* path , LinkedList* pArrayListVenta)
 	}
     return retorno;
 }
-/** \brief Guarda los datos de los cliente en el archivo(modo texto).
+/** \brief Guarda los datos de los cliente en el archivo (modo texto).
  *
  * \param Char* path, archivo que va a ser escrito.
  * \param LinkedList* pArrayListCliente, recibe el array.
@@ -106,10 +106,10 @@ int controller_clienteSaveAsText(char* path , LinkedList* pArrayListCliente)
 	fclose(pFile);
 	return retorno;
 }
-/** \brief Guarda los datos de los cliente en el archivo(modo texto).
+/** \brief Guarda los datos de las ventas en el archivo(modo texto).
  *
  * \param Char* path, archivo que va a ser escrito.
- * \param LinkedList* pArrayListCliente, recibe el array.
+ * \param LinkedList* pArrayListVentas, recibe el array.
  * \return (-1) Error / (0) Ok
  *
  */
@@ -150,6 +150,12 @@ int controller_ventasSaveAsText(char* path , LinkedList* pArrayListVentas)
 	fclose(pFile);
 	return retorno;
 }
+/** \brief Agrega un cliente a la lista.
+ *
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_addCliente(LinkedList* pArrayListCliente)
 {
 	int retorno = -1;
@@ -180,7 +186,13 @@ int controller_addCliente(LinkedList* pArrayListCliente)
 	}
 	return retorno;
 }
-
+/** \brief Agrega una venta a la lista.
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_addVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
 {
 	int retorno = -1;
@@ -195,7 +207,7 @@ int controller_addVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListClie
 	{
 		controller_imprimirCliente(pArrayListCliente);
 		if( utn_getNumberInt(&idCliente, "Seleccione el ID del cliente: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
-			cliente_findId(pArrayListCliente, idCliente) &&
+			cliente_findById(pArrayListCliente, idCliente) &&
 			utn_getNumberInt(&auxCantAfiches, "Ingrese la cantidad de afiches: ", "Cantidad incorrecta.\n", 0, INT_MAX, 2) == 0 &&
 			utn_getName(auxNombreArchivo, "Ingrese el nombre del archivo: ", "Nombre invalido.\n", 2, SIZE_STR - 1) == 0 &&
 			utn_getNumberInt(&auxZona, "Ingrese la zona donde se pegaran los afiches (0- CABA | 1- ZONA SUR | 2- ZONA OESTE): ",
@@ -215,7 +227,13 @@ int controller_addVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListClie
 	}
 	return retorno;
 }
-
+/** \brief Se encarga de cobrar una venta (Cambia de estado SIN_COBRAR a COBRADA).
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
 {
 	int retorno = -1;
@@ -248,7 +266,13 @@ int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 	}
 	return retorno;
 }
-
+/** \brief Se encarga de cambiar los datos de la venta (permite seleccionar el campo a modificar).
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_modifyVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
 {
 	int retorno = -1;
@@ -292,13 +316,15 @@ int controller_modifyVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 	}
 	return retorno;
 }
-/** \brief Guarda los datos de los cliente en el archivo(modo texto).
- *
+/** \brief Guarda los datos de los cliente con cantidad de ventas cobradas o adeudadas en el archivo (modo texto).
+ *	Usa estructura de argumentos para filtrar.
  * \param Char* path, archivo que va a ser escrito.
  * \param LinkedList* pArrayListCliente, recibe el array.
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param int estado, recibe el estado de las ventas.
  * \return (-1) Error / (0) Ok
  *
- */
+ *//*
 int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayListCliente, LinkedList* pArrayListVentas, int estado)
 {
 	int retorno = -1;
@@ -346,12 +372,74 @@ int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayLis
 	fclose(pFile);
 	return retorno;
 }
+*/
+/** \brief Guarda los datos de los cliente con cantidad de ventas cobradas o adeudadas en el archivo (modo texto).
+ *	Usa filter
+ * \param Char* path, archivo que va a ser escrito.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param int estado, recibe el estado de las ventas.
+ * \return (-1) Error / (0) Ok
+ *
+ */
+int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayListCliente, LinkedList* pArrayListVentas, int estado)
+{
+	int retorno = -1;
+	Cliente* auxEnvio;
+	LinkedList* listaFiltrada;
+	int len = ll_len(pArrayListCliente);
+	int auxIdCliente, cantVentas;
+	char auxNombre[SIZE_STR];
+	char auxApellido[SIZE_STR];
+	char auxCuit[SIZE_STR];
+	FILE* pFile;
 
+	if(path != NULL && pArrayListCliente != NULL && pArrayListVentas != NULL && len > 0 &&
+		(estado == COBRADA || estado == SIN_COBRAR))
+	{
+		pFile = fopen(path,"w");
+		if(pFile != NULL)
+		{
+			if(estado == COBRADA)
+			{
+				fprintf(pFile, "%s,%s,%s,%s,%s\n","idCliente","nombre","apellido","cuit","cantidadVentasCobradas");
+			}
+			else
+			{
+				fprintf(pFile, "%s,%s,%s,%s,%s\n","idCliente","nombre","apellido","cuit","cantidadVentasSinCobrar");
+			}
+			listaFiltrada = controller_filtrarVentasPorEstado(pArrayListVentas, estado);
+			for (int i = 0; i < len; i++)
+			{
+				auxEnvio = ll_get(pArrayListCliente, i);
+				if(!(cliente_allGets(auxEnvio, &auxIdCliente, auxNombre, auxApellido,auxCuit)))
+				{
+					cantVentas = ll_reduceInt(listaFiltrada, ventas_calcularVentasCobradasOrAdeudadas, &auxIdCliente);
+					fprintf(pFile, "%d,%s,%s,%s,%d\n",auxIdCliente,auxNombre,auxApellido,auxCuit,cantVentas);
+					retorno = 0;
+				}
+			}
+		}
+		else
+		{
+			printf("No se pudo abrir el archivo.\n");
+		}
+	}
+	fclose(pFile);
+	return retorno;
+}
+/** \brief Imprime la venta con mas afiches.
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
 {
 	int retorno = -1;
 	Ventas* auxVenta;
-	int cantAfiches, cantMaxima, auxId, idCliente;
+	int cantAfiches, cantMaxima, auxId, idCliente/*, auxEstado*/;
 
 	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
 	{
@@ -359,7 +447,8 @@ int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedLi
 		{
 			auxVenta = ll_get(pArrayListVentas, i);
 			ventas_getCantAfiches(auxVenta, &cantAfiches);
-			if(i == 0 || cantAfiches > cantMaxima)
+			//ventas_getEstado(auxVenta, &auxEstado);
+			if(i == 0 || /*(auxEstado == 1 &&*/ cantAfiches > cantMaxima)
 			{
 				cantMaxima = cantAfiches;
 				ventas_getIdVentas(auxVenta, &auxId);
@@ -373,14 +462,21 @@ int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedLi
 	}
 	return retorno;
 }
-
-int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente, int limite)
+/** \brief Imprime el cliente al que se le vendio mas y menos afiches (el parametro limite indica MAXIMO o MINIMO).
+ *
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param int limite, recibe MAXIMO o MINIMO.
+ * \return (-1) Error / (0) Ok
+ *
+ *//*
+int controller_imprimirClienteConMasOrMenosAfichesConLimite(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente, int limite)
 {
 	int retorno = -1;
 	Cliente* auxCliente;
 	int cantAfiches, cantLimite, idLimite, idCliente;
 
-	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
+	if(pArrayListVentas != NULL && pArrayListCliente != NULL && (limite == COBRADA || limite == SIN_COBRAR))
 	{
 		for (int i = 0; i < ll_len(pArrayListCliente); i++)
 		{
@@ -410,7 +506,57 @@ int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas,
 	}
 	return retorno;
 }
+*/
+/** \brief Imprime el cliente al que se le vendio mas y menos afiches.
+ *
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
+int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
+{
+	int retorno = -1;
+	Cliente* auxCliente;
+	int cantAfiches, maximo, minimo, idMaximo, idMinimo, idCliente;
 
+	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
+	{
+		for (int i = 0; i < ll_len(pArrayListCliente); i++)
+		{
+			auxCliente = ll_get(pArrayListCliente, i);
+			cliente_getIdCliente(auxCliente, &idCliente);
+			cantAfiches = ll_reduceInt(pArrayListVentas, ventas_calcularCantidadAfiches, &idCliente);
+			if(cantAfiches != 0)
+			{
+				if(i == 0 || cantAfiches > maximo)
+				{
+					maximo = cantAfiches;
+					idMaximo = idCliente;
+				}
+				if(i == 0 || cantAfiches < minimo)
+				{
+					minimo = cantAfiches;
+					idMinimo = idCliente;
+				}
+			}
+		}
+		printf("\n1- El/La cliente al que se le vendio mas afiches fue: ");
+		cliente_findIdAndPrint(pArrayListCliente, idMaximo);
+		printf(" con %d afiches.",maximo);
+		printf("\n2- El/La cliente al que se le vendio menos afiches fue: ");
+		cliente_findIdAndPrint(pArrayListCliente, idMinimo);
+		printf(" con %d afiches.",minimo);
+		retorno = 0;
+	}
+	return retorno;
+}
+/** \brief Imprime la lista de clientes.
+ *
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_imprimirCliente(LinkedList* pArrayListCliente)
 {
 	int retorno = -1;
@@ -422,7 +568,12 @@ int controller_imprimirCliente(LinkedList* pArrayListCliente)
 	}
 	return retorno;
 }
-
+/** \brief Imprime la lista de las ventas.
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
 int controller_imprimirVentas(LinkedList* pArrayListVentas)
 {
 	int retorno = -1;
@@ -431,6 +582,22 @@ int controller_imprimirVentas(LinkedList* pArrayListVentas)
 	{
 		ll_map(pArrayListVentas, ventas_imprimir);
 		retorno = 0;
+	}
+	return retorno;
+}
+/** \brief Imprime la lista de las ventas.
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
+LinkedList* controller_filtrarVentasPorEstado(LinkedList* pArrayListVentas, int estado)
+{
+	LinkedList* retorno;
+
+	if(pArrayListVentas != NULL && (estado == COBRADA || estado == SIN_COBRAR))
+	{
+		retorno = ll_filter(pArrayListVentas, ventas_filterByStatus, &estado);
 	}
 	return retorno;
 }

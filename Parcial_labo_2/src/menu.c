@@ -14,7 +14,7 @@
  * \param	int* pOption, puntero a un espacio de memoria.
  * \return	Retorna 0 (exito)y -1 (error).
  */
-int utn_showMenu(int* pOption, LinkedList* pArrayListCliente)
+int utn_showMenu(int* pOption)
 {
 	int retorno = -1;
 	int option;
@@ -34,24 +34,8 @@ int utn_showMenu(int* pOption, LinkedList* pArrayListCliente)
 									 "10- Salir.\n\n"
 									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS, 2) == 0)
 		{
-		/*
-			&&
-		ll_isEmpty(pArrayListCliente) && option > 1 && option < OPTIONS)
-		{
-			printf("Primero se debe cargar la lista.\n");
-		}
-		else
-		{
-			if(ll_isEmpty(pArrayListEnvio) == 0 && option == 1)
-			{
-				printf("La lista ya fue cargada.\n");
-			}
-			else
-			{
-			*/
-				*pOption = option;
-				retorno = 0;
-
+			*pOption = option;
+			retorno = 0;
 		}
 	}
 	return retorno;

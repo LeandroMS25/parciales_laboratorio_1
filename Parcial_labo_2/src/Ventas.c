@@ -11,12 +11,24 @@
 #include "Ventas.h"
 #include "LinkedList.h"
 #include "Controller.h"
-
+/**
+ * \brief Crea una nueva venta.
+ * \return devuelve un puntero al espacio de memoria del cliente.
+ */
 Ventas* ventas_new(void)
 {
 	return (Ventas*)malloc(sizeof(Ventas));
 }
-
+/**
+ * \brief Crea una nueva venta.
+ * \param char* idVentas, id del producto.
+ * \param char* nombreArchivo, recibe el nombre del producto.
+ * \param char* idCliente, id del camion.
+ * \param char* zona, recibe la zona de destino del producto.
+ * \param char* cantAfiches, recibe lo km del envio.
+ * \param char* estado, recibe el tipo de entrega del envío.
+ * \return devuelve un puntero al espacio de memoria del cliente.
+ */
 Ventas* ventas_newParam(char* idVentas, char* cantAfiches, char* nombreArchivo, char* zona,char* estado,char* idCliente)
 {
 	Ventas* this = ventas_new();
@@ -31,7 +43,10 @@ Ventas* ventas_newParam(char* idVentas, char* cantAfiches, char* nombreArchivo, 
 	}
 	return this;
 }
-
+/*
+ * \brief Borra una venta(libera el espacio de memoria).
+ * \param Ventas* this, Es el puntero al espacio de memoria del envio.
+ */
 void ventas_delete(Ventas* this)
 {
 	if (this != NULL)
@@ -39,7 +54,12 @@ void ventas_delete(Ventas* this)
 		free(this);
 	}
 }
-
+/**
+ * \brief Lee el id de la venta.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int* idVentas, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_getIdVentas(Ventas* this, int* idVentas)
 {
 	int retorno = -1;
@@ -50,8 +70,12 @@ int ventas_getIdVentas(Ventas* this, int* idVentas)
 	}
 	return retorno;
 }
-
-
+/**
+ * \brief Escribe el id de la venta.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int idVentas, recibe el id de ventas.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_setIdVentas(Ventas* this, int idVentas)
 {
 	int retorno = -1;
@@ -62,7 +86,12 @@ int ventas_setIdVentas(Ventas* this, int idVentas)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee la cantidad de afiches recibida.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int* cantAfiches, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_getCantAfiches(Ventas* this, int* cantAfiches)
 {
 	int retorno = -1;
@@ -73,7 +102,12 @@ int ventas_getCantAfiches(Ventas* this, int* cantAfiches)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe la cantidad de afiches.
+ * \param Envio* this, Es el puntero al array.
+ * \param int cantAfiches, recibe la cantidad de afiches.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_setCantAfiches(Ventas* this, int cantAfiches)
 {
 	int retorno = -1;
@@ -84,7 +118,12 @@ int ventas_setCantAfiches(Ventas* this, int cantAfiches)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee el nombre del archivo.
+ * \param Ventas* this, Es el puntero al array.
+ * \param char* nombreArchivo, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_getNombreArchivo(Ventas* this, char* nombreArchivo)
 {
 	int retorno = -1;
@@ -95,7 +134,12 @@ int ventas_getNombreArchivo(Ventas* this, char* nombreArchivo)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe el nombre del archivo.
+ * \param Ventas* this, Es el puntero al array.
+ * \param char* nombreArchivo, recibe el nombre del archivo.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_setNombreArchivo(Ventas* this, char* nombreArchivo)
 {
 	int retorno = -1;
@@ -106,7 +150,12 @@ int ventas_setNombreArchivo(Ventas* this, char* nombreArchivo)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee la zona donde se publican los afiches.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int* zona, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_getZona(Ventas* this, int* zona)
 {
 	int retorno = -1;
@@ -117,7 +166,12 @@ int ventas_getZona(Ventas* this, int* zona)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe la zona donde se publican los afiches.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int zona, recibe la zona.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_setZona(Ventas* this, int zona)
 {
 	int retorno = -1;
@@ -128,7 +182,12 @@ int ventas_setZona(Ventas* this, int zona)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee el id del cliente.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int* idCliente, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_getIdCliente(Ventas* this, int* idCliente)
 {
 	int retorno = -1;
@@ -139,7 +198,12 @@ int ventas_getIdCliente(Ventas* this, int* idCliente)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe el id del cliente.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int idCliente, recibe el id del cliente.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_setIdCliente(Ventas* this, int idCliente)
 {
 	int retorno = -1;
@@ -150,7 +214,12 @@ int ventas_setIdCliente(Ventas* this, int idCliente)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee el estado de la venta.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int* estado, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_getEstado(Ventas* this, int* estado)
 {
 	int retorno = -1;
@@ -161,7 +230,12 @@ int ventas_getEstado(Ventas* this, int* estado)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe el estado de la venta.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int estado, recibe el estado de la venta.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_setEstado(Ventas* this, int estado)
 {
 	int retorno = -1;
@@ -172,7 +246,17 @@ int ventas_setEstado(Ventas* this, int estado)
 	}
 	return retorno;
 }
-
+/**
+ * \brief Escribe los datos recibidos.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int idVentas, recibe el id.
+ * \param int idCliente, recibe el id.
+ * \param char* nombreArchivo, recibe un nombre.
+ * \param int zona, recibe la zona
+ * \param int cantAfiches, recibe la cantidad de afiches.
+ * \param int estado, recibe el estado de la venta.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_allSets(Ventas* this, int idVentas, int cantAfiches, char* nombreArchivo, int zona, int estado, int idCliente)
 {
 	int retorno = -1;
@@ -189,7 +273,17 @@ int ventas_allSets(Ventas* this, int idVentas, int cantAfiches, char* nombreArch
 	}
 	return retorno;
 }
-
+/**
+ * \brief Lee los datos.
+ * \param Ventas* this, Es el puntero al array.
+ * \param int* idVentas, Puntero al espacio de memoria.
+ * \param int* idCliente, Puntero al espacio de memoria.
+ * \param char* idCliente, Puntero al espacio de memoria.
+ * \param int* zona, Puntero al espacio de memoria.
+ * \param int* cantAfiches, Puntero al espacio de memoria.
+ * \param int* estado, Puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
 int ventas_allGets(Ventas* this, int* idVentas, int* cantAfiches, char* nombreArchivo, int* zona, int* estado, int* idCliente)
 {
 	int retorno = -1;
@@ -227,7 +321,7 @@ void ventas_imprimir(void* pElement)
 	}
 }
 /**
- * \brief Función criterio para imprimir cada elemento de la lista.
+ * \brief Función criterio para imprimir solo las ventas sin cobrar.
  * \param void* pElement, Es el puntero al elemento.
  * \return (-1) Error / (0) Ok
  */
@@ -281,6 +375,7 @@ int ventas_findMaxId(LinkedList* pArrayListVentas, int* pMaxId)
  * \brief Recibe un id y chequea si se encuentra en la lista y si la venta esta sin cobrar.
  * \param LinkedList* pArrayListVentas, Es el puntero al array.
  * \param int id, id recibido para comparar.
+ * \param int estado, recibe el estado de la venta.
  * \param int* pIndex, puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
@@ -310,23 +405,24 @@ int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int estado, int* 
 	return retorno;
 }
 /**
- * \brief Recibe un id y chequea si se encuentra en la lista.
- * \param LinkedList* pArrayListCliente, Es el puntero al array.
- * \param int id, id recibido para comparar.
+ * \brief Funcion criterio que devuelve la cantidad de ventas cobradas o adeudadas.
+ * \param void* pElement, Es el puntero al espacio de memoria.
+ * \param void* arg, Es el puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
 int ventas_calcularVentasCobradasOrAdeudadas(void* pElement, void* arg)
 {
 	int retorno = 0;
 	Ventas* auxVenta = (Ventas*) pElement;
-	ArgumentosFiltro* pArg = (ArgumentosFiltro*) arg;
-	int auxId, auxEstado;
+	//ArgumentosFiltro* pArg = (ArgumentosFiltro*) arg;
+	int* pId = (int*) arg;
+	int auxId/*, auxEstado*/;
 
 	if(auxVenta != NULL)
 	{
 		ventas_getIdCliente(auxVenta, &auxId);
-		ventas_getEstado(auxVenta, &auxEstado);
-		if(auxEstado == pArg->estado && auxId == pArg->id)
+		//ventas_getEstado(auxVenta, &auxEstado);
+		if(auxId == *pId)
 		{
 			retorno = 1;
 		}
@@ -334,9 +430,9 @@ int ventas_calcularVentasCobradasOrAdeudadas(void* pElement, void* arg)
 	return retorno;
 }
 /**
- * \brief Recibe un id y chequea si se encuentra en la lista.
- * \param LinkedList* pArrayListCliente, Es el puntero al array.
- * \param int id, id recibido para comparar.
+ * \brief Funcion criterio que devuelve la cantidad de afiches vendidos.
+ * \param void* pElement, Es el puntero al espacio de memoria.
+ * \param id* arg, Es el puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
 int ventas_calcularCantidadAfiches(void* pElement, void* id)
@@ -344,16 +440,39 @@ int ventas_calcularCantidadAfiches(void* pElement, void* id)
 	int retorno = 0;
 	Ventas* auxVenta = (Ventas*) pElement;
 	int* pId = (int*) id;
-	int auxId, auxEstado, auxCant;
+	int auxId/*, auxEstado*/, auxCant;
 
 	if(auxVenta != NULL)
 	{
 		ventas_getIdCliente(auxVenta, &auxId);
-		ventas_getEstado(auxVenta, &auxEstado);
+		//ventas_getEstado(auxVenta, &auxEstado);
 		ventas_getCantAfiches(auxVenta, &auxCant);
-		if(auxEstado == 1 && auxId == *pId)
+		if(/*auxEstado == 1 &&*/ auxId == *pId)
 		{
 			retorno = auxCant;
+		}
+	}
+	return retorno;
+}
+/**
+ * \brief Funcion criterio que filtra segun el estado de las ventas.
+ * \param void* pElement, Es el puntero al espacio de memoria.
+ * \param id* estado, Es el puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
+int ventas_filterByStatus(void* pElement, void* estado)
+{
+	int retorno = 0;
+	Ventas* auxVenta = (Ventas*) pElement;
+	int* pEstado = (int*) estado;
+	int auxEstado;
+
+	if(auxVenta != NULL)
+	{
+		ventas_getEstado(auxVenta, &auxEstado);
+		if(auxEstado != *pEstado)
+		{
+			retorno = 1;
 		}
 	}
 	return retorno;
