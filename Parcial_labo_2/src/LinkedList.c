@@ -577,6 +577,30 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
     }
     return returnAux;
 }
+/** \brief Recorre la lista y actua de acuerdo a lo que haya en la funcion criterio.
+ * \param this LinkedList* Puntero a la lista.
+ * \param void (*pFunc) Puntero a la funcion criterio.
+ * \param void* arg, Puntero al espacio de memorio del argumento.
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                                ( 0) Si ok
+ */
+int ll_mapArg(LinkedList* this, void (*pFunc)(void*,void*), void* arg)
+{
+    int returnAux = -1;
+    int len = ll_len(this);
+    void* pElement;
+
+    if(this != NULL && pFunc != NULL)
+    {
+    	for (int i= 0; i < len; i++)
+    	{
+    		pElement = ll_get(this, i);
+    		pFunc(pElement, arg);
+    		returnAux = 0;
+		}
+    }
+    return returnAux;
+}
 /** \brief Recorre el arrayList y llama una funcion para filtrar elementos.
  * \param this LinkedList* Puntero a la lista
  * \param int (*pFunc) Puntero a la funcion criterio
@@ -584,23 +608,23 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
  */
 LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*,void*), void* arg)
 {
-	LinkedList* newList = ll_clone(this);
-	int len = ll_len(newList);
+	//LinkedList* newList = ll_clone(this);
+	int len = ll_len(this);
 	void* pElement;
 
 	if(this != NULL && pFunc != NULL)
 	{
 		for (int i = 0; i < len; i++)
 		{
-			pElement = ll_get(newList, i);
+			pElement = ll_get(this, i);
 			if(pFunc(pElement,arg) == 1)
 			{
-				ll_remove(newList, i);
+				ll_remove(this, i);
 				i--;
 			}
 		}
 	}
-	return newList;
+	return this;
 }
 /** \brief Recorre la lista y acumula valores de tipo float.
  * \param this LinkedList* Puntero a la lista

@@ -43,10 +43,13 @@ int ventas_allSets(Ventas* this, int idVentas, int cantAfiches, char* nombreArch
 int ventas_allGets(Ventas* this, int* idVentas, int* cantAfiches, char* nombreArchivo, int* zona, int* estado, int* idCliente);
 void ventas_imprimir(void* pElement);
 void ventas_imprimirSinCobrar(void* pElement);
+void ventas_imprimirSegunIdCliente(void* pElement, void* idCliente);
 int ventas_findMaxId(LinkedList* pArrayListVentas, int* pMaxId);
-int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int estado, int* pIndex);
+int ventas_findIndexByIdAndStatus(LinkedList* pArrayListVentas, int id, int estado, int* pIndex);
+int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int* pIndex);
 int ventas_calcularVentasCobradasOrAdeudadas(void* pElement, void* arg);
 int ventas_calcularCantidadAfiches(void* pElement, void* id);
 int ventas_filterByStatus(void* pElement, void* estado);
+int ventas_filterByIdCliente(void* pElement, void* idCliente);
 
 #endif /* ventas_H_ */

@@ -344,6 +344,30 @@ void ventas_imprimirSinCobrar(void* pElement)
 	}
 }
 /**
+ * \brief Función criterio para imprimir solo las ventas del id cliente.
+ * \param void* pElement, Es el puntero al elemento.
+ * \return (-1) Error / (0) Ok
+ */
+void ventas_imprimirSegunIdCliente(void* pElement, void* idCliente)
+{
+	int auxIdVentas;
+	int auxCantAfiches;
+	char auxNombreArchivo[SIZE_STR];
+	int auxZona;
+	int	auxEstado;
+	int auxIdCliente;
+	int* pIdCliente = (int*) idCliente;
+	Ventas* auxVenta = (Ventas*)pElement;
+	if(!(ventas_allGets(auxVenta, &auxIdVentas, &auxCantAfiches, auxNombreArchivo, &auxZona, &auxEstado,&auxIdCliente)))
+	{
+		if(auxIdCliente == *pIdCliente)
+		{
+			printf("ID Venta: %03d | Afiches: %-10d | Nombre Archivo: %-11s | Zona: %-2d | Estado: %-2d | ID Cliente: %-2d\n",
+									auxIdVentas,auxCantAfiches,auxNombreArchivo,auxZona,auxEstado,auxIdCliente);
+		}
+	}
+}
+/**
  * \brief Encuentra el id maximo de la linkedlist.
  * \param LinkedList* pArrayListVentas, Es el puntero al array.
  * \param int* pMaxId, puntero al espacio de memmoria donde se encuentra el id maximo.
@@ -379,7 +403,7 @@ int ventas_findMaxId(LinkedList* pArrayListVentas, int* pMaxId)
  * \param int* pIndex, puntero al espacio de memoria.
  * \return (-1) Error / (0) Ok
  */
-int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int estado, int* pIndex)
+int ventas_findIndexByIdAndStatus(LinkedList* pArrayListVentas, int id, int estado, int* pIndex)
 {
 	int retorno = -1;
 	Ventas* auxVenta;
@@ -395,6 +419,37 @@ int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int estado, int* 
 			ventas_getIdVentas(auxVenta, &auxId);
 			ventas_getEstado(auxVenta, &auxEstado);
 			if(auxEstado == estado && auxId == id)
+			{
+				*pIndex = i;
+				retorno = 0;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+/**
+ * \brief Recibe un id y chequea si se encuentra en la lista y si la venta esta sin cobrar.
+ * \param LinkedList* pArrayListVentas, Es el puntero al array.
+ * \param int id, id recibido para comparar.
+ * \param int estado, recibe el estado de la venta.
+ * \param int* pIndex, puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
+int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int* pIndex)
+{
+	int retorno = -1;
+	Ventas* auxVenta;
+	int len = ll_len(pArrayListVentas);
+	int auxId;
+
+	if(pArrayListVentas != NULL && id > 0)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			auxVenta = ll_get(pArrayListVentas, i);
+			ventas_getIdVentas(auxVenta, &auxId);
+			if(auxId == id)
 			{
 				*pIndex = i;
 				retorno = 0;
@@ -471,6 +526,29 @@ int ventas_filterByStatus(void* pElement, void* estado)
 	{
 		ventas_getEstado(auxVenta, &auxEstado);
 		if(auxEstado != *pEstado)
+		{
+			retorno = 1;
+		}
+	}
+	return retorno;
+}
+/**
+ * \brief Funcion criterio que filtra segun para eliminar las ventas del cliente.
+ * \param void* pElement, Es el puntero al espacio de memoria.
+ * \param id* idCliente, Es el puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
+int ventas_filterByIdCliente(void* pElement, void* idCliente)
+{
+	int retorno = 0;
+	Ventas* auxVenta = (Ventas*) pElement;
+	int* pIdCliente = (int*) idCliente;
+	int auxIdCliente;
+
+	if(auxVenta != NULL)
+	{
+		ventas_getIdCliente(auxVenta, &auxIdCliente);
+		if(auxIdCliente == *pIdCliente)
 		{
 			retorno = 1;
 		}

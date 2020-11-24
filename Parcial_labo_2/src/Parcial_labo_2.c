@@ -66,7 +66,7 @@ int main()
 					}
 					break;
 				case 7:
-					listaVentasFiltrada = controller_filtrarVentasPorEstado(listaVentas, COBRADA);
+					listaVentasFiltrada = controller_filtrarVentasPorEstado(ll_clone(listaVentas), COBRADA);
 					if( /*!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MAXIMO)) &&
 						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MINIMO))*/
 						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentasFiltrada, listaClientes)) &&
@@ -82,12 +82,30 @@ int main()
 					}
 					break;
 				case 9:
-					if(!(controller_imprimirVentas(listaVentasFiltrada)))
+					if(!(controller_imprimirVentas(listaVentas)))
 					{
 						printf("Se imprimio la lista.\n");
 					}
 					break;
 				case 10:
+					if(!(controller_modifyClient(listaClientes)))
+					{
+						printf("El cliente se modifico correctamente.\n");
+					}
+					break;
+				case 11:
+					if(!(controller_removeVenta(listaVentas, listaClientes)))
+					{
+						printf("La venta se elimino correctamente.\n");
+					}
+					break;
+				case 12:
+					if(!(controller_removeCliente(listaVentas, listaClientes)))
+					{
+						printf("El cliente se elimino correctamente.\n");
+					}
+					break;
+				case 13:
 					printf("Adios");
 					break;
 			}

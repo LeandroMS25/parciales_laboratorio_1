@@ -5,7 +5,7 @@
 
 #ifndef MENU_H_
 #define MENU_H_
-#define OPTIONS 10
+#define OPTIONS 13
 #include "LinkedList.h"
 
 int utn_showMenu(int* pOption);

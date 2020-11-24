@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="ventas_"/>
+		<item key="selection" value="ventas_findIndexById"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="ventas_findIndexById"/>
+			<item value="cliente_findById"/>
+			<item value="ventas_imprimirSinCobrar"/>
+			<item value="void ventas_imprimir(void* pElement)"/>
 			<item value="Ventas_"/>
 			<item value="Cliente_"/>
 			<item value="rub_"/>
@@ -19,10 +23,6 @@
 			<item value="longitud"/>
 			<item value="limite"/>
 			<item value="pantalla"/>
-			<item value="scr_"/>
-			<item value="con_"/>
-			<item value="QTY_CON"/>
-			<item value="QTY_SCR"/>
 		</list>
 		<list key="replacehistory">
 			<item value="ventas_"/>
@@ -41,8 +41,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="469"/>
-		<item key="DIALOG_Y_ORIGIN" value="449"/>
+		<item key="DIALOG_X_ORIGIN" value="995"/>
+		<item key="DIALOG_Y_ORIGIN" value="448"/>
 		<item key="DIALOG_WIDTH" value="284"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

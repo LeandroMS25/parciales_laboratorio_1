@@ -207,7 +207,7 @@ int controller_addVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListClie
 	{
 		controller_imprimirCliente(pArrayListCliente);
 		if( utn_getNumberInt(&idCliente, "Seleccione el ID del cliente: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
-			cliente_findById(pArrayListCliente, idCliente) &&
+			cliente_findClient(pArrayListCliente, idCliente) &&
 			utn_getNumberInt(&auxCantAfiches, "Ingrese la cantidad de afiches: ", "Cantidad incorrecta.\n", 0, INT_MAX, 2) == 0 &&
 			utn_getName(auxNombreArchivo, "Ingrese el nombre del archivo: ", "Nombre invalido.\n", 2, SIZE_STR - 1) == 0 &&
 			utn_getNumberInt(&auxZona, "Ingrese la zona donde se pegaran los afiches (0- CABA | 1- ZONA SUR | 2- ZONA OESTE): ",
@@ -244,11 +244,11 @@ int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 	{
 		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que desea cobrar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
-			ventas_findIndexById(pArrayListVentas, auxId, SIN_COBRAR, &indexModify) == 0 &&
+			ventas_findIndexByIdAndStatus(pArrayListVentas, auxId, SIN_COBRAR, &indexModify) == 0 &&
 			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexModify), &idCliente)) && cliente_findIdAndPrint(pArrayListCliente, idCliente))
 		{
 			auxVenta = ll_get(pArrayListVentas, indexModify);
-			if(utn_getNumberInt(&option, "¿Desea seguir con el cobro de la venta? (1- SI | 2- NO): ", "ID incorrecto.\n", 1, 2, 2) == 0
+			if(utn_getNumberInt(&option, "¿Desea seguir con el cobro de la venta? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0
 				&& option == 1 && !(ventas_setEstado(auxVenta, 1)))
 			{
 				printf("ID venta: %d.\n",auxId);
@@ -262,6 +262,132 @@ int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 		else
 		{
 			printf("El ID de la venta seleccionada es incorrecto.\n");
+		}
+	}
+	return retorno;
+}
+/** \brief Elimina una venta de la lista.
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
+int controller_removeVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
+{
+	int retorno = -1;
+	int auxId, indexRemove, idCliente, option;
+
+	if(pArrayListCliente != NULL && pArrayListVentas != NULL)
+	{
+		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
+		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que quiere modificar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
+			!(ventas_findIndexByIdAndStatus(pArrayListVentas, auxId, SIN_COBRAR, &indexRemove)) &&
+			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexRemove), &idCliente)) && cliente_findIdAndPrint(pArrayListCliente, idCliente) &&
+			utn_getNumberInt(&option, "¿Desea continuar con la eliminacion de la venta? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0)
+		{
+			if(option == 1)
+			{
+				ll_pop(pArrayListVentas, indexRemove);
+				printf("ID venta: %d.\n",auxId);
+				retorno = 0;
+			}
+			else
+			{
+				printf("Se cancelo a la eliminacion.\n");
+			}
+		}
+		else
+		{
+			printf("El ID de la venta seleccionada es incorrecta.\n");
+		}
+	}
+	return retorno;
+}
+/** \brief Elimina un cliente y sus ventas de la lista.
+ *
+ * \param LinkedList* pArrayListVentas, recibe el array.
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
+int controller_removeCliente(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
+{
+	int retorno = -1;
+	int auxId, indexRemove, option;
+
+	if(pArrayListCliente != NULL && pArrayListVentas != NULL)
+	{
+		ll_map(pArrayListCliente, cliente_imprimir);
+		if( utn_getNumberInt(&auxId, "Seleccione el ID de la cliente que se quiere eliminar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
+			cliente_findIndexById(pArrayListCliente, auxId, &indexRemove) && cliente_findIdAndPrint(pArrayListCliente, auxId) &&
+			printf("Ventas del cliente: \n") && !(ll_mapArg(pArrayListVentas, ventas_imprimirSegunIdCliente, &auxId)) &&
+			utn_getNumberInt(&option, "¿Desea continuar con la eliminacion de la venta? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0)
+		{
+			if(option == 1)
+			{
+				pArrayListVentas = ll_filter(pArrayListVentas, ventas_filterByIdCliente, &auxId);
+				cliente_delete(ll_pop(pArrayListCliente, indexRemove));
+				printf("ID cliente: %d.\n",auxId);
+				retorno = 0;
+			}
+			else
+			{
+				printf("Se cancelo a la eliminacion.\n");
+			}
+		}
+		else
+		{
+			printf("El ID del cliente seleccionado es incorrecto.\n");
+		}
+	}
+	return retorno;
+}
+/** \brief Se encarga de cambiar los datos del cliente (permite seleccionar el campo a modificar).
+ *
+ * \param LinkedList* pArrayListCliente, recibe el array.
+ * \return (-1) Error / (0) Ok
+ *
+ */
+int controller_modifyClient(LinkedList* pArrayListCliente)
+{
+	int retorno = -1;
+	Cliente* auxCliente;
+	int auxId, option, indexModify;
+	char auxNombre[SIZE_STR];
+	char auxCuit[SIZE_STR];
+	char auxApellido[SIZE_STR];
+
+	if(pArrayListCliente != NULL)
+	{
+		ll_map(pArrayListCliente, cliente_imprimir);
+		if( utn_getNumberInt(&auxId, "Seleccione el ID del cliente que quiere eliminar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
+			cliente_findIndexById(pArrayListCliente, auxId, &indexModify) &&
+			utn_getNumberInt(&option, "Ingrese el campo a cambiar(0- Nombre | 1- Apellido | 2- Cuit): "
+									, "Opcion incorrecta.\n", 0, INT_MAX, 2) == 0)
+		{
+			auxCliente = ll_get(pArrayListCliente, indexModify);
+			switch (option)
+			{
+				case 0:
+					utn_getName(auxNombre, "Ingrese el nombre del cliente: ", "Nombre invalido.\n", 2, SIZE_STR - 1);
+					cliente_setNombre(auxCliente, auxNombre);
+					break;
+				case 1:
+					utn_getName(auxApellido, "Ingrese el apellido del cliente: ", "Apellido invalido.\n", 2, SIZE_STR - 1);
+					cliente_setApellido(auxCliente, auxApellido);
+					break;
+				case 2:
+					utn_getCuit(auxCuit, "Ingrese el cuit del cliente: ", "Cuit invalido.\n", 2, SIZE_STR - 1);
+					cliente_setCuit(auxCliente, auxCuit);
+					break;
+			}
+			cliente_findIdAndPrint(pArrayListCliente, auxId);
+			retorno = 0;
+		}
+		else
+		{
+			printf("El ID del cliente seleccionado es incorrecto.\n");
 		}
 	}
 	return retorno;
@@ -282,9 +408,9 @@ int controller_modifyVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 
 	if(pArrayListCliente != NULL && pArrayListVentas != NULL)
 	{
-		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
+		ll_map(pArrayListVentas, ventas_imprimir);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que quiere modificar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
-			ventas_findIndexById(pArrayListVentas, auxId, SIN_COBRAR, &indexModify) == 0 &&
+			ventas_findIndexByIdAndStatus(pArrayListVentas, auxId, SIN_COBRAR, &indexModify) == 0 &&
 			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexModify), &idCliente)) && cliente_findIdAndPrint(pArrayListCliente, idCliente) &&
 			utn_getNumberInt(&option, "Ingrese el campo a cambiar(0- Cantidad de afiches | 1- Nombre del archivo | 2- Zona): "
 					, "Opcion incorrecta.\n", 0, INT_MAX, 2) == 0)

@@ -305,7 +305,7 @@ int cliente_findCuitRepetido(LinkedList* pArrayListCliente, char* cuit)
  * \param int id, id recibido para comparar.
  * \return (-1) Error / (0) Ok
  */
-int cliente_findById(LinkedList* pArrayListCliente, int id)
+int cliente_findClient(LinkedList* pArrayListCliente, int id)
 {
 	int retorno = 0;
 	Cliente* auxCliente;
@@ -320,6 +320,36 @@ int cliente_findById(LinkedList* pArrayListCliente, int id)
 			cliente_getIdCliente(auxCliente, &auxId);
 			if(auxId == id)
 			{
+				retorno = 1;
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+/**
+ * \brief Recibe un id, chequea si el cliente se encuentra en la lista y devuelve el indice.
+ * \param LinkedList* pArrayListCliente, Es el puntero al array.
+ * \param int id, id recibido para comparar.
+ * \param int* pIndex, puntero al espacio de memoria.
+ * \return (-1) Error / (0) Ok
+ */
+int cliente_findIndexById(LinkedList* pArrayListCliente, int id, int* pIndex)
+{
+	int retorno = 0;
+	Cliente* auxCliente;
+	int len = ll_len(pArrayListCliente);
+	int auxId;
+
+	if(pArrayListCliente != NULL && id > 0)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			auxCliente = ll_get(pArrayListCliente, i);
+			cliente_getIdCliente(auxCliente, &auxId);
+			if(auxId == id)
+			{
+				*pIndex = i;
 				retorno = 1;
 				break;
 			}

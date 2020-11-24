@@ -31,7 +31,10 @@ int utn_showMenu(int* pOption)
 									 "7- Mostrar estadisticas.\n"
 									 "8- Mostrar lista de clientes.\n"
 									 "9- Mostrar lista de ventas.\n"
-									 "10- Salir.\n\n"
+								 	 "10- Modificar datos del cliente.\n"
+									 "11- Eliminar una venta.\n"
+									 "12- Eliminar un cliente y sus ventas.\n"
+									 "13- Salir.\n\n"
 									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS, 2) == 0)
 		{
 			*pOption = option;

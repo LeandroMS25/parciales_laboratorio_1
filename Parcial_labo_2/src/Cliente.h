@@ -33,8 +33,9 @@ int cliente_allSets(Cliente* this, int idCliente, char* nombre, char* apellido, 
 int cliente_allGets(Cliente* this, int* idCliente, char* nombre, char* apellido, char* cuit);
 int cliente_findMaxId(LinkedList* pArrayListCliente, int* pMaxId);
 int cliente_findCuitRepetido(LinkedList* pArrayListCliente, char* cuit);
-int cliente_findById(LinkedList* pArrayListCliente, int id);
+int cliente_findClient(LinkedList* pArrayListCliente, int id);
 int cliente_findIdAndPrint(LinkedList* pArrayListCliente, int id);
+int cliente_findIndexById(LinkedList* pArrayListCliente, int id, int* pIndex);
 void cliente_imprimir(void* pElement);
 
 #endif /* cliente_H_ */
