@@ -3,7 +3,6 @@
 #include <string.h>
 #include "LinkedList.h"
 
-
 static Node* getNode(LinkedList* this, int nodeIndex);
 static int addNode(LinkedList* this, int nodeIndex,void* pElement);
 
@@ -584,7 +583,7 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
  * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
                                 ( 0) Si ok
  */
-int ll_mapArg(LinkedList* this, void (*pFunc)(void*,void*), void* arg)
+int ll_mapArg(LinkedList* this, int (*pFunc)(void*,void*), void* arg)
 {
     int returnAux = -1;
     int len = ll_len(this);
@@ -595,9 +594,11 @@ int ll_mapArg(LinkedList* this, void (*pFunc)(void*,void*), void* arg)
     	for (int i= 0; i < len; i++)
     	{
     		pElement = ll_get(this, i);
-    		pFunc(pElement, arg);
-    		returnAux = 0;
-		}
+    		if(pFunc(pElement, arg) == 1)
+    		{
+    			returnAux = 0;
+    		}
+    	}
     }
     return returnAux;
 }

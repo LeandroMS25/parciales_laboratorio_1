@@ -348,8 +348,9 @@ void ventas_imprimirSinCobrar(void* pElement)
  * \param void* pElement, Es el puntero al elemento.
  * \return (-1) Error / (0) Ok
  */
-void ventas_imprimirSegunIdCliente(void* pElement, void* idCliente)
+int ventas_imprimirSegunIdCliente(void* pElement, void* idCliente)
 {
+	int retorno = -1;
 	int auxIdVentas;
 	int auxCantAfiches;
 	char auxNombreArchivo[SIZE_STR];
@@ -364,8 +365,10 @@ void ventas_imprimirSegunIdCliente(void* pElement, void* idCliente)
 		{
 			printf("ID Venta: %03d | Afiches: %-10d | Nombre Archivo: %-11s | Zona: %-2d | Estado: %-2d | ID Cliente: %-2d\n",
 									auxIdVentas,auxCantAfiches,auxNombreArchivo,auxZona,auxEstado,auxIdCliente);
+			retorno = 1;
 		}
 	}
+	return retorno;
 }
 /**
  * \brief Encuentra el id maximo de la linkedlist.

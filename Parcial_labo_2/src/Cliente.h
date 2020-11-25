@@ -31,11 +31,11 @@ int cliente_setCuit(Cliente* this, char* cuit);
 int cliente_getCuit(Cliente* this, char* cuit);
 int cliente_allSets(Cliente* this, int idCliente, char* nombre, char* apellido, char* cuit);
 int cliente_allGets(Cliente* this, int* idCliente, char* nombre, char* apellido, char* cuit);
-int cliente_findMaxId(LinkedList* pArrayListCliente, int* pMaxId);
-int cliente_findCuitRepetido(LinkedList* pArrayListCliente, char* cuit);
-int cliente_findClient(LinkedList* pArrayListCliente, int id);
-int cliente_findIdAndPrint(LinkedList* pArrayListCliente, int id);
-int cliente_findIndexById(LinkedList* pArrayListCliente, int id, int* pIndex);
 void cliente_imprimir(void* pElement);
+int cliente_findCuitRepetido(void* pElement, void* cuit);
+int cliente_findClient(void* pElement, void* id);
+int cliente_findIdAndPrint(void* pElement, void* id);
+int cliente_findMaxId(LinkedList* pArrayListCliente, int* pMaxId);
+int cliente_findIndexById(LinkedList* pArrayListCliente, int id, int* pIndex);
 
 #endif /* cliente_H_ */

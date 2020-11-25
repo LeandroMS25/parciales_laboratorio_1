@@ -273,57 +273,46 @@ int cliente_findMaxId(LinkedList* pArrayListCliente, int* pMaxId)
 }
 /**
  * \brief Recibe un cuit y chequea si ya existe un cliente con el mismo cuit en la lista.
- * \param LinkedList* pArrayListCliente, Es el puntero al array.
- * \param char* cuit, cuit recibido para comparar.
+ * \param void* pElement, Es el puntero al array.
+ * \param void* cuit, cuit recibido para comparar.
  * \return (-1) Error / (0) Ok
  */
-int cliente_findCuitRepetido(LinkedList* pArrayListCliente, char* cuit)
+int cliente_findCuitRepetido(void* pElement, void* cuit)
 {
 	int retorno = 0;
-	Cliente* auxCliente;
-	int len = ll_len(pArrayListCliente);
+	Cliente* auxCliente = (Cliente*) pElement;
 	char auxCuit[SIZE_STR];
 
-	if(pArrayListCliente != NULL && cuit != NULL)
+	if(pElement != NULL && cuit != NULL)
 	{
-		for (int i = 0; i < len; i++)
+		cliente_getCuit(auxCliente, auxCuit);
+		if(strncmp(auxCuit,cuit,SIZE_STR) == 0)
 		{
-			auxCliente = ll_get(pArrayListCliente, i);
-			cliente_getCuit(auxCliente, auxCuit);
-			if(strncmp(auxCuit,cuit,SIZE_STR) == 0)
-			{
-				retorno = 1;
-				break;
-			}
+			retorno = 1;
 		}
 	}
 	return retorno;
 }
 /**
  * \brief Recibe un id y chequea si el cliente se encuentra en la lista.
- * \param LinkedList* pArrayListCliente, Es el puntero al array.
- * \param int id, id recibido para comparar.
+ * \param void* pElement, Es el puntero al array.
+ * \param void* id, id recibido para comparar.
  * \return (-1) Error / (0) Ok
  */
-int cliente_findClient(LinkedList* pArrayListCliente, int id)
+int cliente_findClient(void* pElement, void* id)
 {
 	int retorno = 0;
-	Cliente* auxCliente;
-	int len = ll_len(pArrayListCliente);
+	Cliente* auxCliente = (Cliente*) pElement;
+	int* pId = (int*) id;
 	int auxId;
 
-	if(pArrayListCliente != NULL && id > 0)
+	if(auxCliente != NULL && id > 0)
 	{
-		for (int i = 0; i < len; i++)
-		{
-			auxCliente = ll_get(pArrayListCliente, i);
 			cliente_getIdCliente(auxCliente, &auxId);
-			if(auxId == id)
+			if(auxId == *pId)
 			{
 				retorno = 1;
-				break;
 			}
-		}
 	}
 	return retorno;
 }
@@ -359,31 +348,26 @@ int cliente_findIndexById(LinkedList* pArrayListCliente, int id, int* pIndex)
 }
 /**
  * \brief Recibe un id, chequea si se encuentra en la lista e imprime el cliente.
- * \param LinkedList* pArrayListCliente, Es el puntero al array.
- * \param int id, id recibido para comparar.
+ * \param void* pElement, Es el puntero al array.
+ * \param int* id, id recibido para comparar.
  * \return (-1) Error / (0) Ok
  */
-int cliente_findIdAndPrint(LinkedList* pArrayListCliente, int id)
+int cliente_findIdAndPrint(void* pElement, void* id)
 {
 	int retorno = 0;
-	Cliente* auxCliente;
-	int len = ll_len(pArrayListCliente);
+	Cliente* auxCliente = (Cliente*) pElement;
+	int* pId = (int*) id;
 	int auxId;
 	char auxNombre[SIZE_STR];
 	char auxApellido[SIZE_STR];
 	char auxCuit[SIZE_STR];
 
-	if(pArrayListCliente != NULL && id > 0)
+	if(auxCliente != NULL && id > 0)
 	{
-		for (int i = 0; i < len; i++)
+		if(!(cliente_allGets(auxCliente, &auxId, auxNombre, auxApellido, auxCuit)) && auxId == *pId)
 		{
-			auxCliente = ll_get(pArrayListCliente, i);
-			if(!(cliente_allGets(auxCliente, &auxId, auxNombre, auxApellido, auxCuit)) && auxId == id)
-			{
-				printf("Nombre: %-10s | Apellido: %-11s | Cuit: %-10s\n", auxNombre, auxApellido, auxCuit);
-				retorno = 1;
-				break;
-			}
+			printf("Nombre: %-10s | Apellido: %-11s | Cuit: %-10s\n", auxNombre, auxApellido, auxCuit);
+			retorno = 1;
 		}
 	}
 	return retorno;

@@ -8,6 +8,7 @@
 #include "parser.h"
 #include "validaciones.h"
 #include "Controller.h"
+#include "Informes.h"
 #define LEN_TEXT 4096
 
 /** \brief Carga los datos de los clientes desde el archivo (modo texto).
@@ -170,7 +171,7 @@ int controller_addCliente(LinkedList* pArrayListCliente)
 		if( utn_getName(auxNombre, "Ingrese el nombre del cliente: ", "Nombre invalido.\n", 2, SIZE_STR - 1) == 0 &&
 			utn_getName(auxApellido, "Ingrese el apellido del cliente: ", "Apellido invalido.\n", 2, SIZE_STR - 1) == 0 &&
 			utn_getCuit(auxCuit, "Ingrese el cuit del cliente: ", "Cuit invalido.\n", 2, SIZE_STR - 1) == 0 &&
-			!(cliente_findCuitRepetido(pArrayListCliente, auxCuit)) &&
+			ll_mapArg(pArrayListCliente, cliente_findCuitRepetido, auxCuit) != 0 &&
 			!(cliente_findMaxId(pArrayListCliente, &auxId)) &&
 			!(cliente_allSets(auxCliente, auxId, auxNombre, auxApellido, auxCuit)))
 		{
@@ -207,7 +208,7 @@ int controller_addVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListClie
 	{
 		controller_imprimirCliente(pArrayListCliente);
 		if( utn_getNumberInt(&idCliente, "Seleccione el ID del cliente: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
-			cliente_findClient(pArrayListCliente, idCliente) &&
+			ll_mapArg(pArrayListCliente, cliente_findClient, &idCliente) == 0 &&
 			utn_getNumberInt(&auxCantAfiches, "Ingrese la cantidad de afiches: ", "Cantidad incorrecta.\n", 0, INT_MAX, 2) == 0 &&
 			utn_getName(auxNombreArchivo, "Ingrese el nombre del archivo: ", "Nombre invalido.\n", 2, SIZE_STR - 1) == 0 &&
 			utn_getNumberInt(&auxZona, "Ingrese la zona donde se pegaran los afiches (0- CABA | 1- ZONA SUR | 2- ZONA OESTE): ",
@@ -245,7 +246,7 @@ int controller_cobrarVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que desea cobrar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
 			ventas_findIndexByIdAndStatus(pArrayListVentas, auxId, SIN_COBRAR, &indexModify) == 0 &&
-			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexModify), &idCliente)) && cliente_findIdAndPrint(pArrayListCliente, idCliente))
+			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexModify), &idCliente)) && ll_mapArg(pArrayListCliente, cliente_findIdAndPrint, &idCliente) == 0)
 		{
 			auxVenta = ll_get(pArrayListVentas, indexModify);
 			if(utn_getNumberInt(&option, "¿Desea seguir con el cobro de la venta? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0
@@ -283,7 +284,7 @@ int controller_removeVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 		ll_map(pArrayListVentas, ventas_imprimirSinCobrar);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que quiere modificar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
 			!(ventas_findIndexByIdAndStatus(pArrayListVentas, auxId, SIN_COBRAR, &indexRemove)) &&
-			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexRemove), &idCliente)) && cliente_findIdAndPrint(pArrayListCliente, idCliente) &&
+			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexRemove), &idCliente)) && ll_mapArg(pArrayListCliente, cliente_findIdAndPrint, &idCliente) == 0 &&
 			utn_getNumberInt(&option, "¿Desea continuar con la eliminacion de la venta? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0)
 		{
 			if(option == 1)
@@ -320,12 +321,13 @@ int controller_removeCliente(LinkedList* pArrayListVentas, LinkedList* pArrayLis
 	{
 		ll_map(pArrayListCliente, cliente_imprimir);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la cliente que se quiere eliminar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
-			cliente_findIndexById(pArrayListCliente, auxId, &indexRemove) && cliente_findIdAndPrint(pArrayListCliente, auxId) &&
-			printf("Ventas del cliente: \n") && !(ll_mapArg(pArrayListVentas, ventas_imprimirSegunIdCliente, &auxId)) &&
-			utn_getNumberInt(&option, "¿Desea continuar con la eliminacion de la venta? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0)
+			cliente_findIndexById(pArrayListCliente, auxId, &indexRemove) && ll_mapArg(pArrayListCliente, cliente_findIdAndPrint, &auxId) == 0 &&
+			utn_getNumberInt(&option, "¿Desea continuar con la eliminacion de la cliente? (1- SI | 2- NO): ", "Respuesta incorrecta.\n", 1, 2, 2) == 0)
 		{
 			if(option == 1)
 			{
+				printf("Ventas elimininadas del cliente: \n");
+				ll_mapArg(pArrayListVentas, ventas_imprimirSegunIdCliente, &auxId);
 				pArrayListVentas = ll_filter(pArrayListVentas, ventas_filterByIdCliente, &auxId);
 				cliente_delete(ll_pop(pArrayListCliente, indexRemove));
 				printf("ID cliente: %d.\n",auxId);
@@ -382,7 +384,7 @@ int controller_modifyClient(LinkedList* pArrayListCliente)
 					cliente_setCuit(auxCliente, auxCuit);
 					break;
 			}
-			cliente_findIdAndPrint(pArrayListCliente, auxId);
+			ll_mapArg(pArrayListCliente, cliente_findIdAndPrint, &auxId);
 			retorno = 0;
 		}
 		else
@@ -411,7 +413,7 @@ int controller_modifyVenta(LinkedList* pArrayListVentas, LinkedList* pArrayListC
 		ll_map(pArrayListVentas, ventas_imprimir);
 		if( utn_getNumberInt(&auxId, "Seleccione el ID de la venta que quiere modificar: ", "ID incorrecto.\n", 0, INT_MAX, 2) == 0 &&
 			ventas_findIndexByIdAndStatus(pArrayListVentas, auxId, SIN_COBRAR, &indexModify) == 0 &&
-			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexModify), &idCliente)) && cliente_findIdAndPrint(pArrayListCliente, idCliente) &&
+			!(ventas_getIdCliente(ll_get(pArrayListVentas, indexModify), &idCliente)) && ll_mapArg(pArrayListCliente, cliente_findIdAndPrint, &idCliente) == 0 &&
 			utn_getNumberInt(&option, "Ingrese el campo a cambiar(0- Cantidad de afiches | 1- Nombre del archivo | 2- Zona): "
 					, "Opcion incorrecta.\n", 0, INT_MAX, 2) == 0)
 		{
@@ -497,8 +499,7 @@ int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayLis
 	}
 	fclose(pFile);
 	return retorno;
-}
-*/
+}*/
 /** \brief Guarda los datos de los cliente con cantidad de ventas cobradas o adeudadas en el archivo (modo texto).
  *	Usa filter
  * \param Char* path, archivo que va a ser escrito.
@@ -554,126 +555,24 @@ int controller_generarInformeDeCobrosOrDeudas(char* path , LinkedList* pArrayLis
 	fclose(pFile);
 	return retorno;
 }
-/** \brief Imprime la venta con mas afiches.
- *
- * \param LinkedList* pArrayListVentas, recibe el array.
- * \param LinkedList* pArrayListCliente, recibe el array.
- * \return (-1) Error / (0) Ok
- *
- */
-int controller_imprimirVentaConMasAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
-{
-	int retorno = -1;
-	Ventas* auxVenta;
-	int cantAfiches, cantMaxima, auxId, idCliente/*, auxEstado*/;
-
-	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
-	{
-		for (int i = 0; i < ll_len(pArrayListVentas); i++)
-		{
-			auxVenta = ll_get(pArrayListVentas, i);
-			ventas_getCantAfiches(auxVenta, &cantAfiches);
-			//ventas_getEstado(auxVenta, &auxEstado);
-			if(i == 0 || /*(auxEstado == 1 &&*/ cantAfiches > cantMaxima)
-			{
-				cantMaxima = cantAfiches;
-				ventas_getIdVentas(auxVenta, &auxId);
-				ventas_getIdCliente(auxVenta, &idCliente);
-			}
-		}
-		printf("\n3- El ID de la venta con mas afiches es el %d con %d afiches.\n",auxId,cantMaxima);
-		printf("El/La cliente que hizo la compra fue: ");
-		cliente_findIdAndPrint(pArrayListCliente, idCliente);
-		retorno = 0;
-	}
-	return retorno;
-}
-/** \brief Imprime el cliente al que se le vendio mas y menos afiches (el parametro limite indica MAXIMO o MINIMO).
- *
- * \param LinkedList* pArrayListCliente, recibe el array.
- * \param LinkedList* pArrayListVentas, recibe el array.
- * \param int limite, recibe MAXIMO o MINIMO.
- * \return (-1) Error / (0) Ok
- *
- *//*
-int controller_imprimirClienteConMasOrMenosAfichesConLimite(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente, int limite)
-{
-	int retorno = -1;
-	Cliente* auxCliente;
-	int cantAfiches, cantLimite, idLimite, idCliente;
-
-	if(pArrayListVentas != NULL && pArrayListCliente != NULL && (limite == COBRADA || limite == SIN_COBRAR))
-	{
-		for (int i = 0; i < ll_len(pArrayListCliente); i++)
-		{
-			auxCliente = ll_get(pArrayListCliente, i);
-			cliente_getIdCliente(auxCliente, &idCliente);
-			cantAfiches = ll_reduceInt(pArrayListVentas, ventas_calcularCantidadAfiches, &idCliente);
-			if( cantAfiches != 0 &&
-				((limite == MAXIMO && (i == 0 || cantAfiches > cantLimite)) ||
-				(limite == MINIMO && (i == 0 || cantAfiches < cantLimite))))
-			{
-				cantLimite = cantAfiches;
-				idLimite = idCliente;
-			}
-		}
-		if(limite == MAXIMO)
-		{
-			printf("\n1- El/La cliente al que se le vendio mas afiches fue: ");
-			cliente_findIdAndPrint(pArrayListCliente, idLimite);
-		}
-		else
-		{
-			printf("\n2- El/La cliente al que se le vendio menos afiches fue: ");
-			cliente_findIdAndPrint(pArrayListCliente, idLimite);
-		}
-		printf(" con %d afiches.",cantLimite);
-		retorno = 0;
-	}
-	return retorno;
-}
-*/
-/** \brief Imprime el cliente al que se le vendio mas y menos afiches.
+/** \brief Imprime los informes.
  *
  * \param LinkedList* pArrayListCliente, recibe el array.
  * \param LinkedList* pArrayListVentas, recibe el array.
  * \return (-1) Error / (0) Ok
  *
  */
-int controller_imprimirClienteConMasOrMenosAfiches(LinkedList* pArrayListVentas, LinkedList* pArrayListCliente)
+int controller_generarInformes(LinkedList* pArrayListCliente, LinkedList* pArrayListVentas)
 {
 	int retorno = -1;
-	Cliente* auxCliente;
-	int cantAfiches, maximo, minimo, idMaximo, idMinimo, idCliente;
 
-	if(pArrayListVentas != NULL && pArrayListCliente != NULL)
+	if(pArrayListCliente != NULL && pArrayListVentas != NULL)
 	{
-		for (int i = 0; i < ll_len(pArrayListCliente); i++)
+		if(!(informes_imprimirClienteConMasOrMenosAfiches(pArrayListVentas, pArrayListCliente)) &&
+		   !(informes_imprimirVentaConMasAfiches(pArrayListVentas, pArrayListCliente)))
 		{
-			auxCliente = ll_get(pArrayListCliente, i);
-			cliente_getIdCliente(auxCliente, &idCliente);
-			cantAfiches = ll_reduceInt(pArrayListVentas, ventas_calcularCantidadAfiches, &idCliente);
-			if(cantAfiches != 0)
-			{
-				if(i == 0 || cantAfiches > maximo)
-				{
-					maximo = cantAfiches;
-					idMaximo = idCliente;
-				}
-				if(i == 0 || cantAfiches < minimo)
-				{
-					minimo = cantAfiches;
-					idMinimo = idCliente;
-				}
-			}
+			retorno = 0;
 		}
-		printf("\n1- El/La cliente al que se le vendio mas afiches fue: ");
-		cliente_findIdAndPrint(pArrayListCliente, idMaximo);
-		printf(" con %d afiches.",maximo);
-		printf("\n2- El/La cliente al que se le vendio menos afiches fue: ");
-		cliente_findIdAndPrint(pArrayListCliente, idMinimo);
-		printf(" con %d afiches.",minimo);
-		retorno = 0;
 	}
 	return retorno;
 }

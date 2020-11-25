@@ -26,7 +26,7 @@ int main()
     	do
 		{
 			option = 0;
-			utn_showMenu(&option);
+			utn_showMenu(&option, listaClientes, listaVentas);
 			switch(option)
 			{
 				case 1:
@@ -67,10 +67,7 @@ int main()
 					break;
 				case 7:
 					listaVentasFiltrada = controller_filtrarVentasPorEstado(ll_clone(listaVentas), COBRADA);
-					if( /*!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MAXIMO)) &&
-						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentas, listaClientes, MINIMO))*/
-						!(controller_imprimirClienteConMasOrMenosAfiches(listaVentasFiltrada, listaClientes)) &&
-						!(controller_imprimirVentaConMasAfiches(listaVentasFiltrada, listaClientes)))
+					if(!(controller_generarInformes(listaClientes, listaVentasFiltrada)))
 					{
 						printf("Las estadisticas se generaron correctamente.\n");
 					}

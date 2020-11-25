@@ -8,6 +8,6 @@
 #define OPTIONS 13
 #include "LinkedList.h"
 
-int utn_showMenu(int* pOption);
+int utn_showMenu(int* pOption, LinkedList* pArrayListCliente, LinkedList* pArrayListVentas);
 
 #endif /* MENU_H_ */

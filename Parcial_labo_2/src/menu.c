@@ -14,7 +14,7 @@
  * \param	int* pOption, puntero a un espacio de memoria.
  * \return	Retorna 0 (exito)y -1 (error).
  */
-int utn_showMenu(int* pOption)
+int utn_showMenu(int* pOption, LinkedList* pArrayListCliente, LinkedList* pArrayListVentas)
 {
 	int retorno = -1;
 	int option;
@@ -35,10 +35,22 @@ int utn_showMenu(int* pOption)
 									 "11- Eliminar una venta.\n"
 									 "12- Eliminar un cliente y sus ventas.\n"
 									 "13- Salir.\n\n"
-									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS, 2) == 0)
+									 "Ingrese la opcion: ", "Opcion ingresada invalida.\n", 1, OPTIONS, 2) == 0 &&
+		ll_isEmpty(pArrayListCliente) && (option > 1 || option < 13))
 		{
-			*pOption = option;
-			retorno = 0;
+			printf("Debe ingresar un elemento en la lista de clientes.\n");
+		}
+		else
+		{
+			if(ll_isEmpty(pArrayListCliente) && (option > 2 || option < 13))
+			{
+				printf("Debe ingresar un elemento en la lista de ventas.\n");
+			}
+			else
+			{
+				*pOption = option;
+				retorno = 0;
+			}
 		}
 	}
 	return retorno;
