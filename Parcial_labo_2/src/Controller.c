@@ -328,7 +328,7 @@ int controller_removeCliente(LinkedList* pArrayListVentas, LinkedList* pArrayLis
 			{
 				printf("Ventas elimininadas del cliente: \n");
 				ll_mapArg(pArrayListVentas, ventas_imprimirSegunIdCliente, &auxId);
-				pArrayListVentas = ll_filter(pArrayListVentas, ventas_filterByIdCliente, &auxId);
+				ventas_deleteByIdCliente(pArrayListVentas, auxId);
 				cliente_delete(ll_pop(pArrayListCliente, indexRemove));
 				printf("ID cliente: %d.\n",auxId);
 				retorno = 0;

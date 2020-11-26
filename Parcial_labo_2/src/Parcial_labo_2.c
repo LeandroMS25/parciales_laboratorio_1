@@ -54,13 +54,13 @@ int main()
 					}
 					break;
 				case 5:
-					if(!(controller_generarInformeDeCobrosOrDeudas("cobradas2.csv", listaClientes, listaVentas, COBRADA)))
+					if(!(controller_generarInformeDeCobrosOrDeudas("cobradas.csv", listaClientes, listaVentas, COBRADA)))
 					{
 						printf("El archivo se genero correctamente.\n");
 					}
 					break;
 				case 6:
-					if(!(controller_generarInformeDeCobrosOrDeudas("a_cobrar2.csv", listaClientes, listaVentas, SIN_COBRAR)))
+					if(!(controller_generarInformeDeCobrosOrDeudas("a_cobrar.csv", listaClientes, listaVentas, SIN_COBRAR)))
 					{
 						printf("El archivo se genero correctamente.\n");
 					}

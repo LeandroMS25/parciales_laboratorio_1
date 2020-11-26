@@ -558,3 +558,32 @@ int ventas_filterByIdCliente(void* pElement, void* idCliente)
 	}
 	return retorno;
 }
+/**
+ * \brief Filtra segun para eliminar las ventas del cliente.
+ * \param LinkedList* pArrayListVentas, Es el puntero al espacio de memoria.
+ * \param int id, recibe el id de cliente para encontrar las ventas.
+ * \param int index, recibe el indice.
+ * \return (-1) Error / (0) Ok
+ */
+int ventas_deleteByIdCliente(LinkedList* pArrayListVentas, int id)
+{
+	int retorno = -1;
+	Ventas* auxVenta;
+	int len = ll_len(pArrayListVentas);
+	int auxId;
+
+	if(pArrayListVentas != NULL && id > 0)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			auxVenta = ll_get(pArrayListVentas, i);
+			ventas_getIdCliente(auxVenta, &auxId);
+			if(auxId == id)
+			{
+				ventas_delete(ll_pop(pArrayListVentas, i));
+				retorno = 0;
+			}
+		}
+	}
+	return retorno;
+}

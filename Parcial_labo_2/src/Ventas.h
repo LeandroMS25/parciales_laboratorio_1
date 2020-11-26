@@ -4,7 +4,6 @@
  *  Created on: 21 nov. 2020
  *      Author: Leandro Sobrino
  */
-
 #ifndef ventas_H_
 #define ventas_H_
 #define SIZE_STR 128
@@ -51,5 +50,6 @@ int ventas_filterByIdCliente(void* pElement, void* idCliente);
 int ventas_findMaxId(LinkedList* pArrayListVentas, int* pMaxId);
 int ventas_findIndexByIdAndStatus(LinkedList* pArrayListVentas, int id, int estado, int* pIndex);
 int ventas_findIndexById(LinkedList* pArrayListVentas, int id, int* pIndex);
+int ventas_deleteByIdCliente(LinkedList* pArrayListVentas, int id);
 
 #endif /* ventas_H_ */
